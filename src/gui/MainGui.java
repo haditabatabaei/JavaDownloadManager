@@ -14,11 +14,13 @@ import java.util.ArrayList;
 public class MainGui extends JFrame {
     private ArrayList<JButton> toolBarButtons;
     private ArrayList<JMenuItem> topMenuItems;
+    private Icons icons;
 
     public MainGui() {
         super("Java Download Manager");
         toolBarButtons = new ArrayList<>();
         topMenuItems = new ArrayList<>();
+        icons = new Icons();
         setSize(1070, 680);
         setLocation(200, 200);
         setLayout(new BorderLayout());
@@ -31,28 +33,49 @@ public class MainGui extends JFrame {
         LeftButtonHoverHandler lbhh = new LeftButtonHoverHandler();
 
         JToolBar toolBar = new JToolBar("Tool Bar");
-        toolBarButtons.add(new JButton("New Download"));
-        toolBarButtons.add(new JButton("Pause"));
-        toolBarButtons.add(new JButton("Resume"));
+        toolBarButtons.add(new JButton("New Download"));//
+        toolBarButtons.add(new JButton("Pause"));//
+        toolBarButtons.add(new JButton("Resume"));//
         toolBarButtons.add(new JButton("Cancel"));
-        toolBarButtons.add(new JButton("Remove"));
-        toolBarButtons.add(new JButton("Settings"));
+        toolBarButtons.add(new JButton("Remove"));//
+        toolBarButtons.add(new JButton("Settings"));//
 
         toolBar.setBackground(Colors.LightBlue);
         toolBar.setFloatable(false);
         toolBar.setBorderPainted(false);
-        toolBar.setBorder(new EmptyBorder(0,0,0,0));
+        toolBar.setBorder(new EmptyBorder(0, 0, 0, 0));
 
-        EmptyBorder toolbarBtnEBorder = new EmptyBorder(10,5,10,5);
-        for (JButton button : toolBarButtons) {
-            button.setBackground(Colors.LightBlue);
-            button.setForeground(Colors.DarkGray);
-            button.setFocusPainted(false);
-            button.addMouseListener(bhh);
-            button.addActionListener(allActionHandler);
-            button.setBorderPainted(false);
-            button.setBorder(toolbarBtnEBorder);
-            toolBar.add(button);
+        EmptyBorder toolbarBtnEBorder = new EmptyBorder(10, 5, 10, 5);
+        for (int i = 0 ; i < 6 ; i++) {
+            JButton tmpBtn = toolBarButtons.get(i);
+            switch (tmpBtn.getText()) {
+                case "Settings":
+                    tmpBtn.setIcon(icons.getSettingsColor());
+                    break;
+                case "New Download":
+                    tmpBtn.setIcon(icons.getNewDlGreen());
+                    break;
+                case "Pause":
+                    tmpBtn.setIcon(icons.getPauseColor());
+                    break;
+                case "Remove":
+                    tmpBtn.setIcon(icons.getDeletePurple());
+                    break;
+                case "Resume":
+                    tmpBtn.setIcon(icons.getStartColor());
+                    break;
+                case "Cancel":
+                    tmpBtn.setIcon(icons.getCancelColor());
+                    break;
+            }
+            tmpBtn.setBackground(Colors.LightBlue);
+            tmpBtn.setForeground(Colors.DarkGray);
+            tmpBtn.setFocusPainted(false);
+            tmpBtn.addMouseListener(bhh);
+            tmpBtn.addActionListener(allActionHandler);
+            tmpBtn.setBorderPainted(false);
+            tmpBtn.setBorder(toolbarBtnEBorder);
+            toolBar.add(tmpBtn);
             toolBar.addSeparator();
         }
 
@@ -139,6 +162,17 @@ public class MainGui extends JFrame {
         EmptyBorder leftBtnEmpBorder = new EmptyBorder(10, 0, 10, 0);
 
         for (JButton button : leftButtonsList) {
+            switch (leftButtonsList.indexOf(button)){
+                case 0:
+                    button.setIcon(icons.getProcessingColor());
+                    break;
+                case 1:
+                    button.setIcon(icons.getCompletedColor());
+                    break;
+                case 2:
+                    button.setIcon(icons.getQueueColor());
+                    break;
+            }
             button.setBackground(Colors.DarkGray);
             button.setForeground(Color.WHITE);
             button.setBorderPainted(false);
