@@ -15,12 +15,14 @@ public class MainGui extends JFrame {
     private ArrayList<JButton> toolBarButtons;
     private ArrayList<JMenuItem> topMenuItems;
     private Icons icons;
+    private NewDownloadFrame newDownloadFrame;
 
     public MainGui() {
         super("Java Download Manager");
         toolBarButtons = new ArrayList<>();
         topMenuItems = new ArrayList<>();
         icons = new Icons();
+        newDownloadFrame = new NewDownloadFrame();
         setSize(1070, 680);
         setLocation(200, 200);
         setLayout(new BorderLayout());
@@ -46,7 +48,7 @@ public class MainGui extends JFrame {
         toolBar.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         EmptyBorder toolbarBtnEBorder = new EmptyBorder(10, 5, 10, 5);
-        for (int i = 0 ; i < 6 ; i++) {
+        for (int i = 0; i < 6; i++) {
             JButton tmpBtn = toolBarButtons.get(i);
             switch (tmpBtn.getText()) {
                 case "Settings":
@@ -67,6 +69,14 @@ public class MainGui extends JFrame {
                 case "Cancel":
                     tmpBtn.setIcon(icons.getCancelColor());
                     break;
+            }
+            if (tmpBtn.getText().equals("New Download")) {
+                tmpBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        newDownloadFrame.setVisible(true);
+                    }
+                });
             }
             tmpBtn.setBackground(Colors.LightBlue);
             tmpBtn.setForeground(Colors.DarkGray);
@@ -162,7 +172,7 @@ public class MainGui extends JFrame {
         EmptyBorder leftBtnEmpBorder = new EmptyBorder(10, 0, 10, 0);
 
         for (JButton button : leftButtonsList) {
-            switch (leftButtonsList.indexOf(button)){
+            switch (leftButtonsList.indexOf(button)) {
                 case 0:
                     button.setIcon(icons.getProcessingColor());
                     break;
