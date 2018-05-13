@@ -23,6 +23,7 @@ public class MainGui extends JFrame {
         topMenuItems = new ArrayList<>();
         icons = new Icons();
         newDownloadFrame = new NewDownloadFrame();
+        setMinimumSize(new Dimension(1000,500));
         setSize(1070, 680);
         setLocation(200, 200);
         setLayout(new BorderLayout());
@@ -152,11 +153,21 @@ public class MainGui extends JFrame {
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(Colors.DarkGray);
         leftPanel.setPreferredSize(new Dimension(200, 0));
-        leftPanel.setLayout(new BorderLayout(0, 0));
-        JPanel leftButtonsPanel = new JPanel(new GridLayout(4, 1, 0, 5));
+        leftPanel.setLayout(new BorderLayout());
+        JPanel leftButtonsPanel = new JPanel(new GridLayout(4, 1, 0, 0));
         leftButtonsPanel.setBackground(Colors.DarkGray);
-        leftButtonsPanel.setBorder(new EmptyBorder(50, 0, 0, 0));
-        leftPanel.add(leftButtonsPanel, BorderLayout.NORTH);
+        leftButtonsPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+        try {
+            ImageIcon logo = new ImageIcon(getClass().getResource("..//images//missile-logo.jpg"));
+            JLabel logoLable = new JLabel();
+            logoLable.setIcon(logo);
+            leftPanel.add(logoLable, BorderLayout.NORTH);
+        } catch (Exception e) {
+            System.out.println("Exception Error.");
+        }
+
+        leftPanel.add(leftButtonsPanel, BorderLayout.CENTER);
 
         ArrayList<JButton> leftButtonsList = new ArrayList<>();
 
@@ -169,12 +180,22 @@ public class MainGui extends JFrame {
         leftButtonsList.add(completedBtn);
         leftButtonsList.add(queuesBtn);
         leftButtonsList.add(defaultBtn);
-        EmptyBorder leftBtnEmpBorder = new EmptyBorder(10, 0, 10, 0);
+        EmptyBorder leftBtnEmpBorder = new EmptyBorder(0, 0, 10, 0);
+        JPanel rightpanel = new JPanel();
 
         for (JButton button : leftButtonsList) {
             switch (leftButtonsList.indexOf(button)) {
                 case 0:
                     button.setIcon(icons.getProcessingColor());
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (rightpanel.isVisible())
+                                rightpanel.setVisible(false);
+                            else
+                                rightpanel.setVisible(true);
+                        }
+                    });
                     break;
                 case 1:
                     button.setIcon(icons.getCompletedColor());
@@ -193,10 +214,10 @@ public class MainGui extends JFrame {
             button.addActionListener(allActionHandler);
         }
 
-        JPanel mainDownloadsPanel = new JPanel();
-        mainDownloadsPanel.setBackground(Colors.VeryLightBlue);
 
-        add(mainDownloadsPanel, BorderLayout.CENTER);
+        rightpanel.setBackground(Color.BLACK);
+        rightpanel.setVisible(true);
+        add(rightpanel, BorderLayout.CENTER);
         add(leftPanel, BorderLayout.WEST);
         setJMenuBar(topMenuBar);
         add(toolBar, BorderLayout.NORTH);
