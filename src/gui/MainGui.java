@@ -4,12 +4,17 @@ import ActionHandlers.AllActionHandler;
 import ActionHandlers.ButtonHoverHandler;
 import ActionHandlers.LeftButtonHoverHandler;
 
+import download.Download;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainGui extends JFrame {
     private ArrayList<JButton> toolBarButtons;
@@ -23,14 +28,20 @@ public class MainGui extends JFrame {
         topMenuItems = new ArrayList<>();
         icons = new Icons();
         newDownloadFrame = new NewDownloadFrame();
-        setMinimumSize(new Dimension(1000,500));
+        setMinimumSize(new Dimension(1000, 500));
         setSize(1070, 680);
         setLocation(200, 200);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBackground(Colors.DarkBlue);
+        ArrayList<Download> downloads = new ArrayList<>();
 
-
+        for (int i = 0; i < 10; i++) {
+            downloads.add(new Download());
+            downloads.get(i).setFileName("DownloadFileName" + i + "Text.exe");
+            downloads.get(i).setSize(10 * i);
+            downloads.get(i).setUrlAddress("http://www.test.com/myFile/downloads/" + downloads.get(i).getFileName());
+        }
         AllActionHandler allActionHandler = new AllActionHandler();
         ButtonHoverHandler bhh = new ButtonHoverHandler();
         LeftButtonHoverHandler lbhh = new LeftButtonHoverHandler();
@@ -94,7 +105,14 @@ public class MainGui extends JFrame {
         JMenuBar topMenuBar = new JMenuBar();
         JMenu downloadMenu = new JMenu("Download");
         JMenu helpMenu = new JMenu("Help");
-        JMenuItem exitOption = new JMenuItem("Exit");
+        JMenu exitOption = new JMenu("Exit");
+        exitOption.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                System.exit(0);
+            }
+        });
         JMenuItem newDl = new JMenuItem("New Download");
         JMenuItem pauseDl = new JMenuItem("Pause");
         JMenuItem resumeDl = new JMenuItem("Resume");
@@ -154,20 +172,17 @@ public class MainGui extends JFrame {
         leftPanel.setBackground(Colors.DarkGray);
         leftPanel.setPreferredSize(new Dimension(200, 0));
         leftPanel.setLayout(new BorderLayout());
-        JPanel leftButtonsPanel = new JPanel(new GridLayout(4, 1, 0, 0));
+        JPanel leftButtonsPanel = new JPanel(new BorderLayout());
         leftButtonsPanel.setBackground(Colors.DarkGray);
         leftButtonsPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 
-        try {
-            ImageIcon logo = new ImageIcon(getClass().getResource("..//images//missile-logo.jpg"));
-            JLabel logoLable = new JLabel();
-            logoLable.setIcon(logo);
-            leftPanel.add(logoLable, BorderLayout.NORTH);
-        } catch (Exception e) {
-            System.out.println("Exception Error.");
-        }
-
+        ImageIcon logo = new ImageIcon(getClass().getResource("..//images//missile-logo.jpg"));
+        JLabel logoLable = new JLabel();
+        logoLable.setIcon(logo);
+        JPanel leftButtonsExactPanel = new JPanel(new GridLayout(4, 1, 0, 0));
+        leftPanel.add(logoLable, BorderLayout.NORTH);
         leftPanel.add(leftButtonsPanel, BorderLayout.CENTER);
+        leftButtonsPanel.add(leftButtonsExactPanel, BorderLayout.NORTH);
 
         ArrayList<JButton> leftButtonsList = new ArrayList<>();
 
@@ -180,8 +195,8 @@ public class MainGui extends JFrame {
         leftButtonsList.add(completedBtn);
         leftButtonsList.add(queuesBtn);
         leftButtonsList.add(defaultBtn);
-        EmptyBorder leftBtnEmpBorder = new EmptyBorder(0, 0, 10, 0);
-        JPanel rightpanel = new JPanel();
+        EmptyBorder leftBtnEmpBorder = new EmptyBorder(15, 0, 15, 0);
+        JPanel rightpanel = new JPanel(new GridLayout(20,1));
 
         for (JButton button : leftButtonsList) {
             switch (leftButtonsList.indexOf(button)) {
@@ -209,15 +224,30 @@ public class MainGui extends JFrame {
             button.setBorderPainted(false);
             button.setBorder(leftBtnEmpBorder);
             button.setFocusPainted(false);
-            leftButtonsPanel.add(button);
+            leftButtonsExactPanel.add(button);
             button.addMouseListener(lbhh);
             button.addActionListener(allActionHandler);
         }
+        JScrollPane rightSideScrPane = new JScrollPane(rightpanel);
 
+        ArrayList<JPanel> downloadsList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            downloadsList.add(new JPanel(new BorderLayout()));
+        }
 
-        rightpanel.setBackground(Color.BLACK);
-        rightpanel.setVisible(true);
-        add(rightpanel, BorderLayout.CENTER);
+        Random randGen = new Random();
+        for (JPanel downloadItem : downloadsList) {
+            System.out.println(downloads.get(downloadsList.indexOf(downloadItem)).getFileName());
+            downloadItem.add(new JLabel("Hello World!"), BorderLayout.SOUTH);
+            downloadItem.add(new JLabel(downloads.get(downloadsList.indexOf(downloadItem)).getFileName()), BorderLayout.NORTH);
+            downloadItem.add(new JLabel(downloads.get(downloadsList.indexOf(downloadItem)).getSize() + ""), BorderLayout.EAST);
+            downloadItem.add(new JLabel(downloads.get(downloadsList.indexOf(downloadItem)).getDate() + " " + downloads.get(downloadsList.indexOf(downloadItem)).getTime()), BorderLayout.NORTH);
+            downloadItem.setBackground(new Color(randGen.nextInt(255), randGen.nextInt(255), randGen.nextInt(255)));
+            rightpanel.add(downloadItem);
+        }
+
+        add(rightSideScrPane, BorderLayout.CENTER);
+        rightSideScrPane.setVisible(true);
         add(leftPanel, BorderLayout.WEST);
         setJMenuBar(topMenuBar);
         add(toolBar, BorderLayout.NORTH);
