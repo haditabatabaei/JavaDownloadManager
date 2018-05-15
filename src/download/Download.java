@@ -1,31 +1,76 @@
 package download;
 
 import javax.swing.*;
+import java.io.File;
 
 public class Download {
     private String fileName;
     private String urlAddress;
-    private float size;// this is in megabytes.
-    private JProgressBar downloadProgressBar;
     private String date;
     private String time;
+    private File file;
+    private JProgressBar downloadProgressBar;
+    private boolean isDownloading;
+    private boolean isFinished;
+    private final float fullFileSize;
+    private float downloadedSize;
+    private boolean isInQueue;
+    private ImageIcon fileIcon;
 
     public Download(String urlAddress) {
         this.urlAddress = urlAddress;
         downloadProgressBar = new JProgressBar(0, 100);
+        fileName = "";
+        fullFileSize = 0;
+        fileIcon = new ImageIcon(getClass().getResource("..//icons//trash_empty.png"));
+        time = "22:01:00";
+        date = "2013-05-23";
     }
 
-    public Download(String urlAddress, String fileName) {
+    public Download(String urlAddress, String fileName, float fullFileSize) {
+        time = "22:01:00";
+        date = "2013-05-23";
         this.urlAddress = urlAddress;
         this.fileName = fileName;
+        this.fullFileSize = fullFileSize;
         downloadProgressBar = new JProgressBar(0, 100);
+        fileIcon = new ImageIcon(getClass().getResource("..//icons//trash_empty.png"));
     }
 
     public Download() {
+        time = "22:01:00";
+        date = "2013-05-23";
         urlAddress = "";
-        this.fileName = "";
+        fileName = "";
+        fullFileSize = 0;
         downloadProgressBar = new JProgressBar(0, 100);
+        fileIcon = new ImageIcon(getClass().getResource("..//icons//trash_empty.png"));
     }
+
+    public boolean isDownloading() {
+        return isDownloading;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public boolean isInQueue() {
+        return isInQueue;
+    }
+
+    public float getFullFileSize() {
+        return fullFileSize;
+    }
+
+    public float getDownloadedSize() {
+        return downloadedSize;
+    }
+
+    public JProgressBar getDownloadProgressBar() {
+        return downloadProgressBar;
+    }
+
 
     public String getFileName() {
         return fileName;
@@ -35,17 +80,9 @@ public class Download {
         return urlAddress;
     }
 
-    public float getSize() {
-        return size;
-    }
-
-    public JProgressBar getDownloadPrgressBar() {
-        return downloadProgressBar;
-    }
-
     public String toString() {
         String toReturn = "";
-        toReturn += "File Name : " + fileName + "\nurl address : " + urlAddress + "\nFile Size : " + size;
+        toReturn += "File Name : " + fileName + "\nurl address : " + urlAddress + "\nFile Size : " + downloadedSize;
         return toReturn;
     }
 
@@ -57,8 +94,8 @@ public class Download {
         this.fileName = fileName;
     }
 
-    public void setSize(float size) {
-        this.size = size;
+    public void setDownloadedSize(float size) {
+        downloadedSize = size;
     }
 
     public void setUrlAddress(String urlAddress) {
@@ -79,5 +116,13 @@ public class Download {
 
     public String getDate() {
         return date;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public ImageIcon getFileIcon() {
+        return fileIcon;
     }
 }
