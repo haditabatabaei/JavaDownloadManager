@@ -47,6 +47,19 @@ public class Download {
         fileIcon = new ImageIcon(getClass().getResource("..//icons//trash_empty.png"));
     }
 
+    public Download(int i) {
+        fileName = "DownloadFileName.exe";
+        urlAddress = "http://www.test.com/files/DownloadFileName.exe";
+        time = "22:01:00";
+        date = "2013-05-23";
+        downloadProgressBar = new JProgressBar(0, 100);
+/*
+        fileIcon = new ImageIcon(getClass().getResource("..//icons//trash_empty"));
+*/
+        isDownloading = true;
+        fullFileSize = 500;
+    }
+
     public boolean isDownloading() {
         return isDownloading;
     }
@@ -124,5 +137,17 @@ public class Download {
 
     public ImageIcon getFileIcon() {
         return fileIcon;
+    }
+
+    public void setDownloading(boolean downloading) {
+        isDownloading = downloading;
+    }
+
+    public void setInQueue(boolean inQueue) {
+        isInQueue = inQueue;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 }
