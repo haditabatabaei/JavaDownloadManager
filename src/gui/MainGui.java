@@ -5,6 +5,10 @@ import ActionHandlers.ButtonHoverHandler;
 import ActionHandlers.LeftButtonHoverHandler;
 
 import download.Download;
+import gui.Panels.DownloadPanel;
+import gui.Panels.NewDownloadFrame;
+
+import Collection.DownloadCollection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,35 +17,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.AbstractQueue;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Random;
 
 public class MainGui extends JFrame {
     private ArrayList<JButton> toolBarButtons;
     private ArrayList<JMenuItem> topMenuItems;
-    private Icons icons;
     private NewDownloadFrame newDownloadFrame;
+    private Icons icons;
+    private DownloadCollection downloadCollection;
 
     public MainGui() {
         super("Java Download Manager");
         toolBarButtons = new ArrayList<>();
         topMenuItems = new ArrayList<>();
         icons = new Icons();
-        newDownloadFrame = new NewDownloadFrame();
-        setMinimumSize(new Dimension(1000, 500));
-        setSize(1070, 680);
+        downloadCollection = new DownloadCollection();
+        setMinimumSize(new Dimension(900, 500));
+        setSize(900, 680);
         setLocation(200, 200);
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setBackground(Colors.DarkBlue);
-        ArrayList<Download> downloads = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            downloads.add(new Download());
-            downloads.get(i).setFileName("DownloadFileName" + i + "Text.exe");
-            downloads.get(i).setSize(10 * i);
-            downloads.get(i).setUrlAddress("http://www.test.com/myFile/downloads/" + downloads.get(i).getFileName());
-        }
         AllActionHandler allActionHandler = new AllActionHandler();
         ButtonHoverHandler bhh = new ButtonHoverHandler();
         LeftButtonHoverHandler lbhh = new LeftButtonHoverHandler();
@@ -64,6 +64,7 @@ public class MainGui extends JFrame {
             JButton tmpBtn = toolBarButtons.get(i);
             switch (tmpBtn.getText()) {
                 case "Settings":
+                    System.out.println("Hello");
                     tmpBtn.setIcon(icons.getSettingsColor());
                     break;
                 case "New Download":
@@ -86,6 +87,7 @@ public class MainGui extends JFrame {
                 tmpBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        newDownloadFrame = new NewDownloadFrame();
                         newDownloadFrame.setVisible(true);
                     }
                 });
@@ -170,7 +172,10 @@ public class MainGui extends JFrame {
 
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(Colors.DarkGray);
-        leftPanel.setPreferredSize(new Dimension(200, 0));
+        leftPanel.setPreferredSize(new Dimension(200, 0)
+
+
+        );
         leftPanel.setLayout(new BorderLayout());
         JPanel leftButtonsPanel = new JPanel(new BorderLayout());
         leftButtonsPanel.setBackground(Colors.DarkGray);
@@ -186,8 +191,8 @@ public class MainGui extends JFrame {
 
         ArrayList<JButton> leftButtonsList = new ArrayList<>();
 
-        JButton processingBtn = new JButton("Processing (0/3)");
-        JButton completedBtn = new JButton("Completed (0/3)");
+        JButton processingBtn = new JButton("Processing");
+        JButton completedBtn = new JButton("Completed");
         JButton queuesBtn = new JButton("Queues");
         JButton defaultBtn = new JButton("Default");
 
@@ -196,7 +201,26 @@ public class MainGui extends JFrame {
         leftButtonsList.add(queuesBtn);
         leftButtonsList.add(defaultBtn);
         EmptyBorder leftBtnEmpBorder = new EmptyBorder(15, 0, 15, 0);
-        JPanel rightpanel = new JPanel(new GridLayout(20,1));
+
+        JPanel processingPanel = new JPanel();
+        JPanel completedPanel = new JPanel();
+        JPanel queuePanel = new JPanel();
+
+
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new OverlayLayout(rightPanel));
+
+        JScrollPane processingScrollPane = new JScrollPane(processingPanel);
+        JScrollPane completedScrollPane = new JScrollPane(completedPanel);
+        JScrollPane queueScrollPane = new JScrollPane(queuePanel);
+
+        rightPanel.add(completedScrollPane);
+        rightPanel.add(processingScrollPane);
+        rightPanel.add(queueScrollPane);
+
+        processingScrollPane.setVisible(true);
+        completedScrollPane.setVisible(false);
+        queueScrollPane.setVisible(false);
 
         for (JButton button : leftButtonsList) {
             switch (leftButtonsList.indexOf(button)) {
@@ -205,18 +229,42 @@ public class MainGui extends JFrame {
                     button.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (rightpanel.isVisible())
-                                rightpanel.setVisible(false);
-                            else
-                                rightpanel.setVisible(true);
+                            if (!(processingScrollPane.isVisible())) {
+                                processingScrollPane.setVisible(true);
+                                completedScrollPane.setVisible(false);
+                                queueScrollPane.setVisible(false);
+                                System.out.println("I'm in first if");
+                            }
                         }
                     });
                     break;
                 case 1:
                     button.setIcon(icons.getCompletedColor());
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (!(completedScrollPane.isVisible())) {
+                                processingScrollPane.setVisible(false);
+                                completedScrollPane.setVisible(true);
+                                queueScrollPane.setVisible(false);
+                                System.out.println("I'm in second if");
+                            }
+                        }
+                    });
                     break;
                 case 2:
                     button.setIcon(icons.getQueueColor());
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (!(queueScrollPane.isVisible())) {
+                                processingScrollPane.setVisible(false);
+                                completedScrollPane.setVisible(false);
+                                queueScrollPane.setVisible(true);
+                                System.out.println("I'm in third if");
+                            }
+                        }
+                    });
                     break;
             }
             button.setBackground(Colors.DarkGray);
@@ -228,26 +276,83 @@ public class MainGui extends JFrame {
             button.addMouseListener(lbhh);
             button.addActionListener(allActionHandler);
         }
-        JScrollPane rightSideScrPane = new JScrollPane(rightpanel);
-
-        ArrayList<JPanel> downloadsList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            downloadsList.add(new JPanel(new BorderLayout()));
-        }
-
         Random randGen = new Random();
-        for (JPanel downloadItem : downloadsList) {
-            System.out.println(downloads.get(downloadsList.indexOf(downloadItem)).getFileName());
-            downloadItem.add(new JLabel("Hello World!"), BorderLayout.SOUTH);
-            downloadItem.add(new JLabel(downloads.get(downloadsList.indexOf(downloadItem)).getFileName()), BorderLayout.NORTH);
-            downloadItem.add(new JLabel(downloads.get(downloadsList.indexOf(downloadItem)).getSize() + ""), BorderLayout.EAST);
-            downloadItem.add(new JLabel(downloads.get(downloadsList.indexOf(downloadItem)).getDate() + " " + downloads.get(downloadsList.indexOf(downloadItem)).getTime()), BorderLayout.NORTH);
-            downloadItem.setBackground(new Color(randGen.nextInt(255), randGen.nextInt(255), randGen.nextInt(255)));
-            rightpanel.add(downloadItem);
-        }
 
-        add(rightSideScrPane, BorderLayout.CENTER);
-        rightSideScrPane.setVisible(true);
+        /*
+         RIGHT PANEL
+         */
+
+        ArrayList<DownloadPanel> processingDownloadsList = new ArrayList<>();
+        ArrayList<DownloadPanel> queueDownloadsList = new ArrayList<>();
+        ArrayList<DownloadPanel> completedDownloadsList = new ArrayList<>();
+
+        processingPanel.setLayout(new BorderLayout());
+        completedPanel.setLayout(new BorderLayout());
+        queuePanel.setLayout(new BorderLayout());
+
+        GridLayout g1 = new GridLayout(0, 1, 0, 0);
+        GridLayout g2 = new GridLayout(0, 1, 0, 0);
+        GridLayout g3 = new GridLayout(0, 1, 0, 0);
+
+        JPanel processingListPanel = new JPanel(g1);
+        JPanel completedListPanel = new JPanel(g2);
+        JPanel queueListPanel = new JPanel(g3);
+
+        processingScrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        completedScrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        queueScrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        Dimension myPrefDlDim = new Dimension(0, 80);
+
+        /*
+
+        ADDING PROCESSING DOWNLOADS
+
+         */
+        for (int i = 0; i < 10; i++) {
+            downloadCollection.addProccessingDownload(new Download(0));
+            downloadCollection.getProcessingDownloads().get(i).setDownloadedSize(10 * i);
+            processingDownloadsList.add(new DownloadPanel());
+            processingDownloadsList.get(i).setPreferredSize(myPrefDlDim);
+            processingDownloadsList.get(i).addDownload(downloadCollection.getProcessingDownloads().get(i));
+            processingDownloadsList.get(i).setBackground(new Color(randGen.nextInt(255), randGen.nextInt(255), randGen.nextInt(255)));
+            g1.setRows(g1.getRows() + 1);
+            processingListPanel.add(processingDownloadsList.get(i));
+            downloadCollection.getProcessingDownloads().get(i).print();
+        }
+        System.out.println("Processing Download Finished ");
+        for (int i = 0; i < 5; i++) {
+            downloadCollection.addCompletedDownload(new Download(0));
+            downloadCollection.getCompletedDownloads().get(i).setDownloadedSize(5 * i);
+            completedDownloadsList.add(new DownloadPanel());
+            completedDownloadsList.get(i).setPreferredSize(myPrefDlDim);
+            completedDownloadsList.get(i).addDownload(downloadCollection.getCompletedDownloads().get(i));
+            completedDownloadsList.get(i).setBackground(new Color(randGen.nextInt(255), randGen.nextInt(255), randGen.nextInt(255)));
+            g2.setRows(g2.getRows() + 1);
+            completedListPanel.add(completedDownloadsList.get(i));
+            downloadCollection.getCompletedDownloads().get(i).print();
+        }
+        System.out.println("Completed Download finished");
+/*        Queue<Download> nightDownload = null;
+
+        for (int i = 0; i < 6; i++) {
+            downloadCollection.addQueueDownload(new Download(0), nightDownload);
+            downloadCollection.getQueueDownloads().get(i).setDownloadedSize(10 * i);
+            queueDownloadsList.add(new DownloadPanel());
+            queueDownloadsList.get(i).setPreferredSize(myPrefDlDim);
+            queueDownloadsList.get(i).addDownload(downloadCollection.getQueueDownloads().get(i));
+            queueDownloadsList.get(i).setBackground(new Color(randGen.nextInt(255), randGen.nextInt(255), randGen.nextInt(255)));
+            g1.setRows(g1.getRows() + 1);
+            queueListPanel.add(queueDownloadsList.get(i));
+            downloadCollection.getQueueDownloads().get(i).print();
+        }*/
+
+
+        processingBtn.setText(processingBtn.getText() + " (" + downloadCollection.getProcessingDownloads().size() + ")");
+        completedBtn.setText(completedBtn.getText() + " (" + downloadCollection.getCompletedDownloads().size() + ")");
+        completedPanel.add(completedListPanel, BorderLayout.NORTH);
+        processingPanel.add(processingListPanel, BorderLayout.NORTH);
+        queuePanel.add(queueListPanel, BorderLayout.NORTH);
+        add(rightPanel, BorderLayout.CENTER);
         add(leftPanel, BorderLayout.WEST);
         setJMenuBar(topMenuBar);
         add(toolBar, BorderLayout.NORTH);
