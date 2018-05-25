@@ -1,12 +1,17 @@
 package gui.Panels;
 
-import download.Download;
+import Download.Download;
+import gui.Colors;
 import gui.Icons;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * This class represents a Download panel as a list panel
+ */
 public class DownloadPanel extends JPanel {
     private JLabel downloadName;
     private JLabel fileSize;
@@ -17,26 +22,31 @@ public class DownloadPanel extends JPanel {
     private Icons icons;
     private JPanel insidePanel;
     private JPanel infoPanel;
-    private JPanel smallLabelsPanel;
+    private Download download;
 
+    private boolean isSelect;
+    private Border selectedBorder;
+    private Border defaultBorder;
 
     public DownloadPanel() {
         super(new BorderLayout());
-
+        defaultBorder = BorderFactory.createMatteBorder(0, 0, 5, 0, Colors.LowerDarkBlue2);
+        selectedBorder = BorderFactory.createMatteBorder(0, 0, 5, 0, Color.YELLOW);
+        setBorder(defaultBorder);
         downloadName = new JLabel();
         fileSize = new JLabel();
         dateAndTime = new JLabel();
         icons = new Icons();
 
 
-        insidePanel = new JPanel(new GridLayout(2, 1, 5, 0));
+        insidePanel = new JPanel(new GridLayout(4, 1, 5, 0));
         infoPanel = new JPanel(new GridLayout(1, 3, 0, 5));
         insidePanel.add(downloadName);
         insidePanel.add(infoPanel);
 
         JPanel buttonsPanel = new JPanel(new GridLayout(1, 3, 0, 5));
 
-        buttonsPanel.setMaximumSize(new Dimension(50,50));
+        buttonsPanel.setMaximumSize(new Dimension(50, 50));
 
         infoPanel.add(buttonsPanel);
         infoPanel.add(dateAndTime);
@@ -48,6 +58,7 @@ public class DownloadPanel extends JPanel {
         infoIcon.setIcon(icons.getInfoIcon());
         infoIcon.setBorder(new EmptyBorder(0, 0, 0, 10));
 
+
         fileIcon = new JLabel();
         fileIcon.setIcon(icons.getFileIcon());
         fileIcon.setBorder(new EmptyBorder(0, 10, 0, 10));
@@ -56,11 +67,10 @@ public class DownloadPanel extends JPanel {
         add(infoIcon, BorderLayout.EAST);
 
         EmptyBorder btnEmpBorder = new EmptyBorder(0, 0, 0, 0);
+
         for (int i = 0; i < 3; i++) {
             dlSmallButtonsAsLabels[i] = new JLabel();
             dlSmallButtonsAsLabels[i].setBorder(btnEmpBorder);
-            dlSmallButtonsAsLabels[i].setBackground(new Color(125, 125, 125));
-
             switch (i) {
                 case 0:
                     dlSmallButtonsAsLabels[i].setIcon(icons.getLittleCancel());
@@ -77,9 +87,61 @@ public class DownloadPanel extends JPanel {
         add(insidePanel);
     }
 
+    /**
+     * This method adds a Download to this panel
+     *
+     * @param download
+     */
     public void addDownload(Download download) {
+        this.download = download;
         downloadName.setText(download.getFileName());
         fileSize.setText(download.getDownloadedSize() + " / " + download.getFullFileSize() + "MB");
         dateAndTime.setText(download.getDate() + " " + download.getTime());
+        insidePanel.add(download.getDownloadProgressBar());
+    }
+
+    /**
+     * This method retrieves panel's Download
+     *
+     * @return panel's Download
+     */
+    public Download getDownload() {
+        return download;
+    }
+
+    /**
+     * This method will select this panel and it's Download.
+     */
+
+
+    public void select() {
+        if (!isSelected()) {
+            download.select();
+            setBackground(Color.YELLOW);
+            setBorder(selectedBorder);
+
+        } else {
+            setBackground(Colors.defaultGray);
+            setBorder(defaultBorder);
+        }
+        isSelect = !isSelect;
+    }
+
+    /**
+     * This method checks whether this panel is selected or not
+     *
+     * @return true if selected. false otherwise
+     */
+    public boolean isSelected() {
+        return isSelect;
+    }
+
+    /**
+     * This method retrieves an array of JLabels for handling actions.
+     *
+     * @return array of JLabel
+     */
+    public JLabel[] getDlSmallButtonsAsLabels() {
+        return dlSmallButtonsAsLabels;
     }
 }
