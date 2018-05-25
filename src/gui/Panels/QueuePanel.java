@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class QueuePanel extends JFrame {
-    private JComboBox<String> comboBox;
+    public static JComboBox<String> comboBox;
     private JButton[] queueOperationButtons;
     private JPanel buttonsPanel;
     private JPanel largerButtonsPanel;
@@ -48,13 +48,10 @@ public class QueuePanel extends JFrame {
         comboBox = new JComboBox<>();
         comboBox.setEditable(false);
 
-
         largerButtonsPanel.add(buttonsPanel, BorderLayout.NORTH);
 
         add(comboBox, BorderLayout.NORTH);
         add(largerButtonsPanel, BorderLayout.CENTER);
-
-
     }
 
     public void updateQueueList(ArrayList<DownloadQueue> downloadQueueList) {
@@ -103,5 +100,14 @@ public class QueuePanel extends JFrame {
 
     public JButton[] getQueueOperationButtons() {
         return queueOperationButtons;
+    }
+
+    public static boolean checkRepetiveInCombobox(String queueName) {
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            String toCompare = comboBox.getItemAt(i);
+            if (toCompare.equals(queueName))
+                return true;
+        }
+        return false;
     }
 }
