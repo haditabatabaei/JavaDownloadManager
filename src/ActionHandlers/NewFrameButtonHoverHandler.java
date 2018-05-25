@@ -3,24 +3,24 @@ package ActionHandlers;
 import gui.Colors;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Thic class handles some of left buttons styles
+ * This class handles some hover styles for new Download window buttons
  */
-public class LeftButtonHoverHandler extends MouseAdapter {
+public class NewFrameButtonHoverHandler extends MouseAdapter {
     @Override
-    public void mouseEntered(MouseEvent e){
+    public void mouseEntered(MouseEvent e) {
         super.mouseEntered(e);
         JButton button = (JButton)e.getSource();
-        button.setBackground(Color.darkGray);
+        button.setBackground(Colors.btnGreenHover);
     }
+
     @Override
-    public void mouseExited(MouseEvent e){
+    public void mouseExited(MouseEvent e) {
         super.mouseExited(e);
         JButton button = (JButton)e.getSource();
-        button.setBackground(Colors.DarkGray);
+        button.setBackground(Colors.btnGreen);
     }
 }
