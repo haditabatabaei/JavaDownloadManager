@@ -31,13 +31,13 @@ public class MainGui extends JFrame {
     private NewDownloadFrame newDownloadFrame;
     private SettingsFrame settingsFrame;
     private Icons icons;
-    private DownloadCollection downloadCollection;
     private String defaultSavePath;
     private int numberOfMaximumDownloads;
 
-    private ArrayList<DownloadPanel> processingDownloadsList;
-    private ArrayList<DownloadPanel> queueDownloadsList;
-    private ArrayList<DownloadPanel> completedDownloadsList;
+    public static DownloadCollection downloadCollection;
+    public static ArrayList<DownloadPanel> processingDownloadsList;
+    public static ArrayList<DownloadPanel> queueDownloadsList;
+    public static ArrayList<DownloadPanel> completedDownloadsList;
 
     private GridLayout g1;
     private GridLayout g2;
@@ -240,7 +240,7 @@ public class MainGui extends JFrame {
             switch (topMenuItems.indexOf(item)) {
                 case 0:
                     item.addActionListener(e -> {
-                        newDownloadFrame = new NewDownloadFrame(downloadCollection);
+                        newDownloadFrame = new NewDownloadFrame();
                         newDownloadFrame.setVisible(true);
                         newDownloadFrame.getSavePath().setText(defaultSavePath);
                         newDownloadTask(newDownloadFrame, myPrefDlDim);
@@ -428,7 +428,7 @@ public class MainGui extends JFrame {
         toolBarButtons.get(0).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                newDownloadFrame = new NewDownloadFrame(downloadCollection);
+                newDownloadFrame = new NewDownloadFrame();
                 newDownloadFrame.setVisible(true);
                 newDownloadFrame.getSavePath().setText(defaultSavePath);
                 newDownloadTask(newDownloadFrame, myPrefDlDim);
