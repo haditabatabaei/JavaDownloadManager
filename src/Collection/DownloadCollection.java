@@ -3,6 +3,7 @@ package Collection;
 import Download.Download;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class DownloadCollection {
@@ -111,7 +112,24 @@ public class DownloadCollection {
             System.out.println("Error. Duplicate Download queue");
     }
 
-    public void removeQueue() {
+    public void removeQueue(DownloadQueue queue) {
+        queues.remove(queue);
+    }
 
+    public void removeQueue(String queueName) {
+        Iterator it = queues.iterator();
+        while (it.hasNext()) {
+            DownloadQueue tmp = (DownloadQueue) it.next();
+            if (tmp.getName().equals(queueName))
+                it.remove();
+        }
+    }
+
+    public DownloadQueue getQueueByName(String name) {
+        for (int i = 0; i < queues.size(); i++)
+            if (queues.get(i).getName().equals(name))
+                return queues.get(i);
+
+        return null;
     }
 }
