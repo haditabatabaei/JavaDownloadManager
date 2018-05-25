@@ -1,10 +1,12 @@
 package gui.Panels;
 
 import ActionHandlers.NewFrameButtonHoverHandler;
+import ActionHandlers.QueueOperationHandlers;
 import Collection.DownloadCollection;
 import Collection.DownloadQueue;
 import gui.Colors;
 import gui.Icons;
+import gui.MainGui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -57,14 +59,14 @@ public class NewDownloadFrame extends JFrame {
 
     private DownloadCollection collection;
 
-    public NewDownloadFrame(DownloadCollection collection) {
+    public NewDownloadFrame() {
         super("New Download");
         setSize(480, 350);
         setLocation(100, 100);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-        this.collection = collection;
+        this.collection = MainGui.downloadCollection;
         queuePanel = new QueuePanel();
         icons = new Icons();
 
@@ -175,47 +177,19 @@ public class NewDownloadFrame extends JFrame {
                 }
             }
         });
-
+        QueueOperationHandlers qoh = new QueueOperationHandlers();
         queue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 queuePanel.updateQueueList(collection.getQueues());
                 queuePanel.makeVisible();
-                Random randomGen = new Random();
                 for (int i = 0; i < 4; i++) {
                     switch (i) {
                         case 0:
-                            queuePanel.getQueueOperationButtons()[i].addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    queuePanel.addQueue("Test" + randomGen.nextInt(20), collection.getQueues());
-                                }
-                            });
-                            break;
                         case 1:
-                            queuePanel.getQueueOperationButtons()[i].addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    System.out.println("Queue Selected : " + queuePanel.selectQueue(collection.getQueues()).getName());
-
-                                }
-                            });
-                            break;
                         case 2:
-                            queuePanel.getQueueOperationButtons()[i].addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    queuePanel.removeQueue(collection.getQueues());
-                                }
-                            });
-                            break;
                         case 3:
-                            queuePanel.getQueueOperationButtons()[i].addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    System.out.println("Settings Button Clicked.");
-                                }
-                            });
+                            queuePanel.getQueueOperationButtons()[i].addActionListener(qoh);
                             break;
                     }
                 }
