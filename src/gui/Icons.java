@@ -2,7 +2,10 @@ package gui;
 
 import javax.swing.*;
 
-
+/**
+ * This class contains all icons needed for Download manager
+ * All of them are downloaded from 'Icons8' Application
+ */
 public class Icons {
     private final ImageIcon settings = new ImageIcon(getClass().getResource("..//icons//settings.png"));
     private final ImageIcon pause = new ImageIcon(getClass().getResource("..//icons//button_pause.png"));
@@ -25,6 +28,46 @@ public class Icons {
     private final ImageIcon completedColor = new ImageIcon(getClass().getResource("..//icons//icons8_Ok_32px.png"));
     private final ImageIcon processingColor = new ImageIcon(getClass().getResource("..//icons//icons8_Process_32px.png"));
     private final ImageIcon fileIcon = new ImageIcon(getClass().getResource("..//icons//icons8_Home_45px.png"));
+    private final ImageIcon linkIcon = new ImageIcon(getClass().getResource("..//icons/icons8_Link_32px.png"));
+    private final ImageIcon documentFileIcon = new ImageIcon(getClass().getResource("..//icons/icons8_Document_32px.png"));
+    private final ImageIcon microSdIcon = new ImageIcon(getClass().getResource("..//icons/icons8_Micro_SD_32px.png"));
+    private final ImageIcon folderIcon = new ImageIcon(getClass().getResource("..//icons/icons8_Folder_32px.png"));
+    private final ImageIcon newProductIcon = new ImageIcon(getClass().getResource("..//icons//icons8_New_Product_32px.png"));
+    private final ImageIcon saveIcon = new ImageIcon(getClass().getResource("..//icons//icons8_Save_32px.png"));
+    private final ImageIcon dateIcon = new ImageIcon(getClass().getResource("..//icons//icons8_Calendar_32px.png"));
+    private final ImageIcon runIcon = new ImageIcon(getClass().getResource("..//icons//icons8_Run_Command_32px.png"));
+
+    public ImageIcon getRunIcon() {
+        return runIcon;
+    }
+
+    public ImageIcon getDateIcon() {
+        return dateIcon;
+    }
+
+    public ImageIcon getSaveIcon() {
+        return saveIcon;
+    }
+
+    public ImageIcon getNewProductIcon() {
+        return newProductIcon;
+    }
+
+    public ImageIcon getFolderIcon() {
+        return folderIcon;
+    }
+
+    public ImageIcon getMicroSdIcon() {
+        return microSdIcon;
+    }
+
+    public ImageIcon getDocumentFileIcon() {
+        return documentFileIcon;
+    }
+
+    public ImageIcon getLinkIcon() {
+        return linkIcon;
+    }
 
     public ImageIcon getSettings() {
         return settings;
