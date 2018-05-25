@@ -1,6 +1,7 @@
 package Collection;
 
 import Download.Download;
+import gui.Panels.QueueSettings;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,6 +15,7 @@ public class DownloadQueue {
     private String name;
     private String startTime;
     private String startDate;
+    private QueueSettings queueSettings;
 
 
     public DownloadQueue(String name) {
@@ -21,6 +23,12 @@ public class DownloadQueue {
         this.name = name;
         startTime = LocalTime.now().toString();
         startDate = LocalDate.now().toString();
+        queueSettings = new QueueSettings();
+    }
+
+    public void showMySettings(){
+        queueSettings.fillFrameWithThisQueue(this);
+        queueSettings.makeVisible();
     }
 
     public DownloadQueue() {
@@ -66,5 +74,17 @@ public class DownloadQueue {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+    }
+
+    public QueueSettings getQueueSettings() {
+        return queueSettings;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getStartTime() {
+        return startTime;
     }
 }
