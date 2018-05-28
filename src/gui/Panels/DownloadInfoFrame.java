@@ -5,8 +5,10 @@ import javax.swing.border.EmptyBorder;
 
 import Download.Download;
 import gui.Icons;
+import gui.MainGui;
 
 import java.awt.*;
+import java.util.Random;
 
 public class DownloadInfoFrame extends JFrame {
     /**
@@ -21,10 +23,10 @@ public class DownloadInfoFrame extends JFrame {
         super(download.getFileName() + " Info");
         setSize(480, 350);
         setLocation(100, 100);
-        setMinimumSize(new Dimension(480, 350));
+        setMinimumSize(new Dimension(480, 500));
         setLayout(new BorderLayout());
         icons = new Icons();
-        JPanel infoPanel = new JPanel(new GridLayout(6, 1, 0, 5));
+        JPanel infoPanel = new JPanel(new GridLayout(7, 1, 0, 5));
 
         /* File Name Info */
         JLabel fileInfo = new JLabel();
@@ -60,9 +62,10 @@ public class DownloadInfoFrame extends JFrame {
         pnl1.add(fileSavedirectory, BorderLayout.WEST);
         pnl1.add(fileSavedirectoryField, BorderLayout.CENTER);
 
+        Random randomGen = new Random();
         /*File Size*/
         JLabel fileSize = new JLabel();
-        fileSize.setText("Downloaded : " + download.getDownloadedSize() + " / " + download.getFullFileSize() + " MB");
+        fileSize.setText("Downloaded : " + download.getDownloadedSize() + " / " + download.getFullFileSize() + " MB | " + download.getDownloadProgressBar().getValue() + "% Downloaded. | Transfer Rate : " + (100 + randomGen.nextInt(100)) + " KB/s");
         fileSize.setIcon(icons.getMicroSdIcon());
 
         /*Launch After*/
@@ -73,9 +76,18 @@ public class DownloadInfoFrame extends JFrame {
             launchAfter.setText("File wont launch after Download finished. ");
         launchAfter.setIcon(icons.getRunIcon());
 
-        infoSmallPanels = new JPanel[6];
+        /*Download Queue Info*/
+        JLabel insideQueue = new JLabel();
+        if (download.isInQueue())
+            insideQueue.setText("is in queue : " + "YES | Queue Name : " + download.getQueueName());
+        else
+            insideQueue.setText("is in queue : " + "NO");
+        insideQueue.setIcon(icons.getQueueColor());
 
-        for (int i = 0; i < 6; i++) {
+
+        infoSmallPanels = new JPanel[7];
+
+        for (int i = 0; i < 7; i++) {
             infoSmallPanels[i] = new JPanel(new BorderLayout());
             infoPanel.add(infoSmallPanels[i]);
             switch (i) {
@@ -96,6 +108,10 @@ public class DownloadInfoFrame extends JFrame {
                     break;
                 case 5:
                     infoSmallPanels[i].add(launchAfter, BorderLayout.CENTER);
+                    break;
+                case 6:
+                    infoSmallPanels[i].add(insideQueue, BorderLayout.CENTER);
+                    break;
             }
         }
 
