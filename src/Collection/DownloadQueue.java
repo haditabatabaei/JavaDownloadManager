@@ -1,6 +1,7 @@
 package Collection;
 
 import Download.Download;
+import gui.MainGui;
 import gui.Panels.QueueSettings;
 
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public class DownloadQueue {
     private String startTime;
     private String startDate;
     private QueueSettings queueSettings;
-
+    private boolean isSelected;
 
     public DownloadQueue(String name) {
         items = new ArrayList<>();
@@ -24,9 +25,10 @@ public class DownloadQueue {
         startTime = LocalTime.now().toString();
         startDate = LocalDate.now().toString();
         queueSettings = new QueueSettings();
+        isSelected = false;
     }
 
-    public void showMySettings(){
+    public void showMySettings() {
         queueSettings.fillFrameWithThisQueue(this);
         queueSettings.makeVisible();
     }
@@ -86,5 +88,25 @@ public class DownloadQueue {
 
     public String getStartTime() {
         return startTime;
+    }
+
+    public void select() {
+        if (!isSelected() && !MainGui.downloadCollection.hasDuplicateSelectedQueues()) {
+            isSelected = true;
+        }
+    }
+
+    public void deselect() {
+        if (isSelected()) {
+            isSelected = false;
+        }
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public ArrayList<Download> getItems() {
+        return items;
     }
 }
