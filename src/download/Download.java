@@ -1,5 +1,7 @@
 package Download;
 
+import Collection.DownloadQueue;
+
 import javax.swing.*;
 import java.io.File;
 import java.time.LocalDate;
@@ -27,6 +29,7 @@ public class Download {
     private boolean isSelect;
     private boolean isPaused;
     private boolean isCancled;
+    private String queueName;
 
     public Download(String urlAddress, String fileName, int fullFileSize) {
         time = LocalTime.now().toString();
@@ -284,5 +287,13 @@ public class Download {
      */
     public void openFolder() {
         System.out.println(savePath + " directory opened.");
+    }
+
+    public String getQueueName() {
+        return queueName;
+    }
+
+    public void setQueueName(String queueName) {
+        this.queueName = queueName;
     }
 }
