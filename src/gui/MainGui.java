@@ -5,12 +5,10 @@ import ActionHandlers.LeftButtonHoverHandler;
 
 import Collection.DownloadQueue;
 import Download.Download;
-import gui.Panels.DownloadInfoFrame;
-import gui.Panels.DownloadPanel;
-import gui.Panels.NewDownloadFrame;
+import gui.Panels.*;
 
 import Collection.DownloadCollection;
-import gui.Panels.SettingsFrame;
+import sun.applet.Main;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,7 +21,7 @@ import java.util.Iterator;
  * This is main Java Download Manager Gui
  *
  * @author Seyed Mohammad Hadi Tabatabaei
- * @versino 1.0
+ * @version 1.0
  */
 public class MainGui extends JFrame {
     private ArrayList<JButton> toolBarButtons;
@@ -52,8 +50,6 @@ public class MainGui extends JFrame {
     private JPanel completedListPanel;
     private JPanel queueListPanel;
 
-    private DownloadQueue testDownloadQueue;
-
     public MainGui() {
         super("Java Download Manager");
         toolBarButtons = new ArrayList<>();
@@ -71,7 +67,6 @@ public class MainGui extends JFrame {
         completedBtn = new JButton("Completed");
         queuesBtn = new JButton("Queues");
         defaultBtn = new JButton("Default");
-        testDownloadQueue = new DownloadQueue("Night Download");
 
         processingListPanel = new JPanel(g1);
         completedListPanel = new JPanel(g2);
@@ -390,12 +385,27 @@ public class MainGui extends JFrame {
                     button.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (!(queueScrollPane.isVisible())) {
-                                processingScrollPane.setVisible(false);
-                                completedScrollPane.setVisible(false);
-                                queueScrollPane.setVisible(true);
-                                System.out.println("I'm in third if");
-                            }
+                            QueueSelectionFrame queueSelectionFrame = new QueueSelectionFrame();
+                            queueSelectionFrame.makeVisible();
+                            queueSelectionFrame.getSelectButton().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+
+                                    String selectedQueueName = (String) QueueSelectionFrame.comboBox.getSelectedItem();
+                                    if (selectedQueueName.isEmpty()) {
+                                        JOptionPane.showMessageDialog(null, "Create a queue first. list is empty.", "Error", JOptionPane.WARNING_MESSAGE);
+                                    } else {
+                                        DownloadQueue selectedQueue = MainGui.downloadCollection.getQueueByName(selectedQueueName);
+                                        updatequeueListPanel(selectedQueue);
+                                    }
+                                    if (!(queueScrollPane.isVisible())) {
+                                        processingScrollPane.setVisible(false);
+                                        completedScrollPane.setVisible(false);
+                                        queueScrollPane.setVisible(true);
+                                        System.out.println("I'm in third if");
+                                    }
+                                }
+                            });
                         }
                     });
                     break;
@@ -528,6 +538,7 @@ public class MainGui extends JFrame {
                 switch (downloadStatus) {
                     case 1:
                         downloadCollection.addProccessingDownload(tmpDl);
+                        tmpDl.setDownloading(true);
                         processingDownloadsList.add(tmpDlPanel);
                         processingListPanel.add(processingDownloadsList.get(processingDownloadsList.size() - 1));
                         g1.setRows(g1.getRows() + 1);
@@ -540,14 +551,25 @@ public class MainGui extends JFrame {
                         processingListPanel.add(processingDownloadsList.get(downloadCollection.getProcessingDownloads().size() - 1));
                         break;
                     case 3:
-                        downloadCollection.addQueueDownload(tmpDl, testDownloadQueue);
-                        queueDownloadsList.add(tmpDlPanel);
-                        g1.setRows(g1.getRows() + 1);
-                        downloadCollection.getQueueDownloads().get(downloadCollection.getQueueDownloads().size() - 1).setDownloadedSize(newDownloadFrame.getFullSize());
-                        queueDownloadsList.get(downloadCollection.getQueueDownloads().size() - 1).addDownload(downloadCollection.getQueueDownloads().get(downloadCollection.getQueueDownloads().size() - 1));
-                        queueListPanel.add(queueDownloadsList.get(downloadCollection.getQueueDownloads().size() - 1));
+                        String queueName = NewDownloadFrame.selectedQueueName.getText().replace("Selected Queue : ", "");
+                        if (!queueName.isEmpty()) {
+                            DownloadQueue selectedQueue = downloadCollection.getQueueByName(queueName);
+                            tmpDl.setInQueue(true);
+                            tmpDl.setQueueName(selectedQueue.getName());
+                            selectedQueue.add(tmpDl);
+                            queueDownloadsList.add(tmpDlPanel);
+                            downloadCollection.getQueueDownloads().add(tmpDl);
+                            queueListPanel.add(queueDownloadsList.get(downloadCollection.getQueueDownloads().size() - 1));
+
+                            g1.setRows(g1.getRows() + 1);
+                        } else {
+                            System.out.println("No Queue.");
+                        }
                         break;
                 }
+                System.out.println("-------------------------AFTER ADD------------------------");
+                downloadCollection.printAllQueuesAndTheirDownload();
+                System.out.println("----------------------------------------------------------");
 
                 revalidate();
                 updateDownloadNumbers(processingBtn, completedBtn, queuesBtn);
@@ -795,17 +817,21 @@ public class MainGui extends JFrame {
                     }
                 }
 
+
                 Iterator it2 = queueDownloadsList.iterator();
                 while (it2.hasNext()) {
-                    DownloadPanel tmp = (DownloadPanel) it2.next();
-                    if (tmp.isSelected()) {
-                        tmp.getDownload().remove();
+                    DownloadPanel tmpPanel = (DownloadPanel) it2.next();
+                    if (tmpPanel.isSelected()) {
+                        Download selectedDownload = tmpPanel.getDownload();
+                        DownloadQueue selectedDownloadsQueue = downloadCollection.findSpecialDownloadQueue(selectedDownload);
+                        tmpPanel.getDownload().remove();
                         it2.remove();
-                        queueListPanel.remove(tmp);
-                        downloadCollection.removeQueueDownload(tmp.getDownload(), testDownloadQueue);
+                        downloadCollection.removeDownloadFromQueue(selectedDownload, selectedDownloadsQueue);
+                        queueListPanel.remove(tmpPanel);
                         g2.setRows(g2.getRows() - 1);
                     }
                 }
+
 
                 Iterator it3 = completedDownloadsList.iterator();
                 while (it3.hasNext()) {
@@ -820,8 +846,61 @@ public class MainGui extends JFrame {
                 }
                 break;
         }
+        System.out.println("-------------------AFTER REMOVE--------------------");
+        downloadCollection.printAllQueuesAndTheirDownload();
+        System.out.println("------------------------------------------------");
         updateDownloadNumbers(processingBtn, completedBtn, queuesBtn);
         revalidate();
+    }
+
+    public void updatequeueListPanel(DownloadQueue downloadQueue) {
+        queueListPanel.removeAll();
+        g3.setRows(0);
+        for (int i = 0; i < downloadQueue.getItems().size(); i++) {
+            DownloadPanel tmpDlPanel = new DownloadPanel();
+            tmpDlPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                        DownloadInfoFrame downloadInfoFrame = new DownloadInfoFrame(tmpDlPanel.getDownload());
+                    } else if (e.getClickCount() == 1) {
+                        if (tmpDlPanel.isSelected()) {
+                            tmpDlPanel.select();
+                        } else
+                            tmpDlPanel.select();
+                    } else if (e.getClickCount() == 2) {
+                        tmpDlPanel.getDownload().open();
+                    }
+                }
+            });
+            tmpDlPanel.getDlSmallButtonsAsLabels()[1].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    tmpDlPanel.getDownload().openFolder();
+                }
+            });
+            tmpDlPanel.getDlSmallButtonsAsLabels()[0].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    tmpDlPanel.getDownload().cancel();
+                }
+            });
+
+            tmpDlPanel.getDlSmallButtonsAsLabels()[2].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    tmpDlPanel.getDownload().resume();
+                }
+            });
+            tmpDlPanel.addDownload(downloadQueue.getItems().get(i));
+            queueListPanel.add(tmpDlPanel);
+            g3.setRows(g3.getRows() + 1);
+        }
+        validate();
     }
 
     /**
