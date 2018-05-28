@@ -64,7 +64,7 @@ public class DownloadCollection {
             completedDownloads.remove(download);
     }
 
-    public void removeQueueDownload(Download download, DownloadQueue queue) {
+    public void removeDownloadFromQueue(Download download, DownloadQueue queue) {
         if (queueDownloads.contains(download)) {
             queueDownloads.remove(download);
             queue.remove(download);
@@ -130,6 +130,34 @@ public class DownloadCollection {
             if (queues.get(i).getName().equals(name))
                 return queues.get(i);
 
+        return null;
+    }
+
+    public boolean hasDuplicateSelectedQueues() {
+        int counter = 1;
+        for (DownloadQueue downloadQueue : queues) {
+            if (downloadQueue.isSelected())
+                counter++;
+        }
+        return counter > 1;
+    }
+
+    public void printAllQueuesAndTheirDownload() {
+        for (DownloadQueue downloadQueue : queues) {
+            System.out.println("Queue Name : " + downloadQueue.getName());
+            for (Download download : downloadQueue.getItems())
+                download.print();
+        }
+    }
+
+    public DownloadQueue findSpecialDownloadQueue(Download download) {
+        for (DownloadQueue downloadQueue : queues) {
+            for (Download itDownload : downloadQueue.getItems()) {
+                if (itDownload == download) {
+                    return downloadQueue;
+                }
+            }
+        }
         return null;
     }
 }
