@@ -1,5 +1,5 @@
 # JavaDownloadManager
 #`Seyed Mohammad Hadi Tabatabaei`
-Simple java download manager   
+Java Download Manager       
 Studying Computer Engineering At     
 Amirkabir University of Technology
