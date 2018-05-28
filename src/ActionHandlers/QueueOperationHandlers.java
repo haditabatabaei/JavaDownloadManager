@@ -2,18 +2,16 @@ package ActionHandlers;
 
 import Collection.DownloadQueue;
 import gui.MainGui;
+import gui.Panels.NewDownloadFrame;
 import gui.Panels.QueuePanel;
-import gui.Panels.QueueSettings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Random;
 
 public class QueueOperationHandlers implements ActionListener {
-    private Random randomGen = new Random();
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -23,7 +21,7 @@ public class QueueOperationHandlers implements ActionListener {
             case "Add":
                 System.out.println("Add Clicked.");
                 while (true) {
-                    String queueName = "";
+                    String queueName;
                     try {
                         queueName = JOptionPane.showInputDialog("Enter Queue Name (Without Spaces) : ").replaceAll(" ", "");
 
@@ -55,15 +53,28 @@ public class QueueOperationHandlers implements ActionListener {
                 System.out.println("Select Clicked.");
                 if (QueuePanel.comboBox.getItemCount() != 0) {
                     String selectedName = QueuePanel.comboBox.getSelectedItem() + "";
+                    DownloadQueue selectedQueue = MainGui.downloadCollection.getQueueByName(selectedName);
+                    selectedQueue.select();
+                    NewDownloadFrame.selectedQueueName.setText("Selected Queue : " + selectedQueue.getName());
+                    NewDownloadFrame.selectedQueueName.revalidate();
                     JOptionPane.showMessageDialog(null, selectedName + " Selected.", "Select", JOptionPane.INFORMATION_MESSAGE);
+                    QueuePanel.frame.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Nothing to select.Try add a queue first.", "Error", JOptionPane.WARNING_MESSAGE);
                 }
                 break;
             case "Settings":
-                String selectedQueueName = QueuePanel.comboBox.getSelectedItem() + "";
-                DownloadQueue selectedQueue = MainGui.downloadCollection.getQueueByName(selectedQueueName);
-                selectedQueue.showMySettings();
+                try {
+                    String selectedQueueName = QueuePanel.comboBox.getSelectedItem() + "";
+                    if (!selectedQueueName.isEmpty()) {
+                        DownloadQueue selectedQueue = MainGui.downloadCollection.getQueueByName(selectedQueueName);
+                        selectedQueue.showMySettings();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Nothing is selected.\nSelect or add a queue first.", "Error", JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (NullPointerException npe) {
+                    JOptionPane.showMessageDialog(null, "Nothing is selected.\nSelect or add a queue first.", "Error", JOptionPane.WARNING_MESSAGE);
+                }
                 break;
         }
     }
