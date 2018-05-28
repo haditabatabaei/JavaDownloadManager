@@ -1,18 +1,24 @@
 package gui.Panels;
 
 import Collection.DownloadQueue;
+import gui.MainGui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class QueueSettings {
-    public static JFrame frame;
+    private JFrame frame;
     private JLabel nameLabel;
     private JLabel dateLabel;
     private JLabel timeLabel;
     private JTextField nameTextField;
     private JTextField dateTextField;
     private JTextField timeTextField;
+    private String oldName;
+    private String oldDate;
+    private String oldTime;
     private JButton okButton;
     private JButton cancelButton;
 
@@ -63,6 +69,42 @@ public class QueueSettings {
         frame.add(infoPanel, BorderLayout.NORTH);
         frame.add(lowerPanel, BorderLayout.CENTER);
         lowerPanel.add(buttonsPanel, BorderLayout.NORTH);
+
+
+        okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean nameCheck = false;
+                boolean dateCheck = false;
+                boolean timeCheck = false;
+
+                String inputQueueName = nameTextField.getText();
+                if (!QueuePanel.checkRepetiveInCombobox(inputQueueName))
+                    nameCheck = true;
+                /*
+                DATE CHECK
+                 */
+
+                /*
+                TIME CHECK;
+                 */
+                if (nameCheck) {
+                    MainGui.downloadCollection.getQueueByName(oldName).setName(inputQueueName);
+                    QueuePanel.comboBox.removeItem(QueuePanel.comboBox.getSelectedItem());
+                    QueuePanel.comboBox.addItem(inputQueueName);
+                    QueuePanel.comboBox.setSelectedItem(inputQueueName);
+                    QueuePanel.comboBox.revalidate();
+                    JOptionPane.showMessageDialog(null, "Name Changed.", "Name Changed.", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+            }
+        });
+
     }
 
     public void makeVisible() {
@@ -77,5 +119,12 @@ public class QueueSettings {
         nameTextField.setText(queue.getName());
         timeTextField.setText(queue.getStartTime());
         dateTextField.setText(queue.getStartDate());
+        oldName = queue.getName();
+        oldDate = queue.getStartDate();
+        oldTime = queue.getStartTime();
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 }
