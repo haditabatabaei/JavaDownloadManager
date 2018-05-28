@@ -1,9 +1,7 @@
 package gui.Panels;
 
 import ActionHandlers.NewFrameButtonHoverHandler;
-import ActionHandlers.QueueOperationHandlers;
 import Collection.DownloadCollection;
-import Collection.DownloadQueue;
 import gui.Colors;
 import gui.Icons;
 import gui.MainGui;
@@ -16,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -46,6 +43,7 @@ public class NewDownloadFrame extends JFrame {
     private JLabel fullSize;
     private JLabel fullSizeTooltip;
 
+    public static JLabel selectedQueueName;
 
     private JTextField addressTextField;
     private JTextField nameTextField;
@@ -55,13 +53,13 @@ public class NewDownloadFrame extends JFrame {
 
     private JFileChooser fileChooser;
 
-    private QueuePanel queuePanel;
+    private static QueuePanel queuePanel;
 
     private DownloadCollection collection;
 
     public NewDownloadFrame() {
         super("New Download");
-        setSize(480, 350);
+        setSize(480, 370);
         setLocation(100, 100);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -105,14 +103,17 @@ public class NewDownloadFrame extends JFrame {
 
 
         optionsPanel = new JPanel(new BorderLayout());
-        insideOptionsPanel = new JPanel(new GridLayout(6, 1, 0, 0));
+        insideOptionsPanel = new JPanel(new GridLayout(7, 1, 0, 0));
         JLabel startLabel = new JLabel("Start with : ");
+
+        selectedQueueName = new JLabel();
 
         insideOptionsPanel.add(launchCheckBox);
         insideOptionsPanel.add(startLabel);
         insideOptionsPanel.add(automatic);
         insideOptionsPanel.add(manual);
         insideOptionsPanel.add(queue);
+        insideOptionsPanel.add(selectedQueueName);
 
         optionsPanel.add(insideOptionsPanel, BorderLayout.NORTH);
 
@@ -177,31 +178,21 @@ public class NewDownloadFrame extends JFrame {
                 }
             }
         });
-        QueueOperationHandlers qoh = new QueueOperationHandlers();
         queue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 queuePanel.updateQueueList(collection.getQueues());
                 queuePanel.makeVisible();
-                for (int i = 0; i < 4; i++) {
-                    switch (i) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                            queuePanel.getQueueOperationButtons()[i].addActionListener(qoh);
-                            break;
-                    }
-                }
             }
         });
 
         fileInfoPanel.add(textFieldPanel, BorderLayout.CENTER);
         fileInfoPanel.add(iconsPanel, BorderLayout.WEST);
-        add(fileInfoPanel, BorderLayout.NORTH);
-        add(saveDirPanel, BorderLayout.CENTER);
 
         saveDirPanel.add(optionsPanel, BorderLayout.CENTER);
+
+        add(fileInfoPanel, BorderLayout.NORTH);
+        add(saveDirPanel, BorderLayout.CENTER);
     }
 
     /**
@@ -293,9 +284,5 @@ public class NewDownloadFrame extends JFrame {
      */
     public JTextField getSavePath() {
         return savePath;
-    }
-
-    public void setQueueRadioAction(ArrayList<DownloadQueue> downloadQueueArrayList) {
-
     }
 }
