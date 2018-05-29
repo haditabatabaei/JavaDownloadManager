@@ -181,7 +181,7 @@ public class NewDownloadFrame extends JFrame {
         queue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                queuePanel.updateQueueList(collection.getQueues());
+                QueuePanel.updateQueueList(collection.getQueues());
                 queuePanel.makeVisible();
             }
         });
