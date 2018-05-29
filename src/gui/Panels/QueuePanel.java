@@ -59,7 +59,7 @@ public class QueuePanel extends JFrame {
         frame.add(largerButtonsPanel, BorderLayout.CENTER);
     }
 
-    public void updateQueueList(ArrayList<DownloadQueue> downloadQueueList) {
+    public static void updateQueueList(ArrayList<DownloadQueue> downloadQueueList) {
         comboBox.removeAllItems();
         for (DownloadQueue downloadQueue : downloadQueueList) {
             comboBox.addItem(downloadQueue.getName());
