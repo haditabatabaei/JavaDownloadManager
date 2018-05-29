@@ -1,5 +1,7 @@
 package gui.Panels;
 
+import gui.MainGui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +20,7 @@ public class QueueSelectionFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
         comboBox = QueuePanel.comboBox;
+        QueuePanel.updateQueueList(MainGui.downloadCollection.getQueues());
         JPanel buttonsPanel = new JPanel(new BorderLayout());
         JPanel insideButtonPanel = new JPanel(new GridLayout(1, 2, 5, 5));
         selectButton = new JButton("Select");
@@ -49,9 +52,5 @@ public class QueueSelectionFrame extends JFrame {
 
     public JButton getSelectButton() {
         return selectButton;
-    }
-
-    public JButton getCancelButton() {
-        return cancelButton;
     }
 }
