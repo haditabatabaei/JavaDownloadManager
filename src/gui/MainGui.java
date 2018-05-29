@@ -8,7 +8,6 @@ import Download.Download;
 import gui.Panels.*;
 
 import Collection.DownloadCollection;
-import sun.applet.Main;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -50,6 +49,7 @@ public class MainGui extends JFrame {
     private JPanel completedListPanel;
     private JPanel queueListPanel;
 
+
     public MainGui() {
         super("Java Download Manager");
         toolBarButtons = new ArrayList<>();
@@ -60,9 +60,11 @@ public class MainGui extends JFrame {
         completedDownloadsList = new ArrayList<>();
         numberOfMaximumDownloads = 0;
         downloadCollection = new DownloadCollection();
+
         g1 = new GridLayout(0, 1, 0, 0);
         g2 = new GridLayout(0, 1, 0, 0);
         g3 = new GridLayout(0, 1, 0, 0);
+
         processingBtn = new JButton("Processing");
         completedBtn = new JButton("Completed");
         queuesBtn = new JButton("Queues");
@@ -323,7 +325,6 @@ public class MainGui extends JFrame {
 
         ArrayList<JButton> leftButtonsList = new ArrayList<>();
 
-
         leftButtonsList.add(processingBtn);
         leftButtonsList.add(completedBtn);
         leftButtonsList.add(queuesBtn);
@@ -333,7 +334,6 @@ public class MainGui extends JFrame {
         JPanel processingPanel = new JPanel();
         JPanel completedPanel = new JPanel();
         JPanel queuePanel = new JPanel();
-
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new OverlayLayout(rightPanel));
@@ -547,7 +547,7 @@ public class MainGui extends JFrame {
                         downloadCollection.addProccessingDownload(tmpDl);
                         downloadCollection.getProcessingDownloads().get(downloadCollection.getProcessingDownloads().size() - 1).setDownloadedSize(newDownloadFrame.getFullSize());
                         processingDownloadsList.add(tmpDlPanel);
-                        g1.setRows(g1.getRows() + 1);
+                        g2.setRows(g2.getRows() + 1);
                         processingListPanel.add(processingDownloadsList.get(downloadCollection.getProcessingDownloads().size() - 1));
                         break;
                     case 3:
@@ -556,12 +556,11 @@ public class MainGui extends JFrame {
                             DownloadQueue selectedQueue = downloadCollection.getQueueByName(queueName);
                             tmpDl.setInQueue(true);
                             tmpDl.setQueueName(selectedQueue.getName());
-                            selectedQueue.add(tmpDl);
+                            downloadCollection.addQueueDownload(tmpDl, selectedQueue);
                             queueDownloadsList.add(tmpDlPanel);
-                            downloadCollection.getQueueDownloads().add(tmpDl);
-                            queueListPanel.add(queueDownloadsList.get(downloadCollection.getQueueDownloads().size() - 1));
-
-                            g1.setRows(g1.getRows() + 1);
+                            queueListPanel.add(tmpDlPanel);
+                            g3.setRows(g3.getRows() + 1);
+                            System.out.println("Adding download completed.(Queue download added)");
                         } else {
                             System.out.println("No Queue.");
                         }
@@ -573,44 +572,6 @@ public class MainGui extends JFrame {
 
                 revalidate();
                 updateDownloadNumbers(processingBtn, completedBtn, queuesBtn);
-                tmpDlPanel.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
-                            DownloadInfoFrame downloadInfoFrame = new DownloadInfoFrame(tmpDlPanel.getDownload());
-                        } else if (e.getClickCount() == 1) {
-                            if (tmpDlPanel.isSelected()) {
-                                tmpDlPanel.select();
-                            } else
-                                tmpDlPanel.select();
-                        } else if (e.getClickCount() == 2) {
-                            tmpDlPanel.getDownload().open();
-                        }
-                    }
-                });
-                tmpDlPanel.getDlSmallButtonsAsLabels()[1].addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        tmpDlPanel.getDownload().openFolder();
-                    }
-                });
-                tmpDlPanel.getDlSmallButtonsAsLabels()[0].addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        tmpDlPanel.getDownload().cancel();
-                    }
-                });
-
-                tmpDlPanel.getDlSmallButtonsAsLabels()[2].addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        tmpDlPanel.getDownload().resume();
-                    }
-                });
                 newDownloadFrame.setVisible(false);
                 tmpDlPanel.getDownload().start();
                 checkForFinishedDownloads();
@@ -825,10 +786,10 @@ public class MainGui extends JFrame {
                         Download selectedDownload = tmpPanel.getDownload();
                         DownloadQueue selectedDownloadsQueue = downloadCollection.findSpecialDownloadQueue(selectedDownload);
                         tmpPanel.getDownload().remove();
-                        it2.remove();
-                        downloadCollection.removeDownloadFromQueue(selectedDownload, selectedDownloadsQueue);
                         queueListPanel.remove(tmpPanel);
-                        g2.setRows(g2.getRows() - 1);
+                        downloadCollection.removeDownloadFromQueue(selectedDownload, selectedDownloadsQueue);
+                        it2.remove();
+                        g3.setRows(g3.getRows() - 1);
                     }
                 }
 
@@ -841,7 +802,7 @@ public class MainGui extends JFrame {
                         it3.remove();
                         completedListPanel.remove(tmp);
                         downloadCollection.removeCompletedDownload(tmp.getDownload());
-                        g3.setRows(g3.getRows() - 1);
+                        g2.setRows(g2.getRows() - 1);
                     }
                 }
                 break;
@@ -855,50 +816,14 @@ public class MainGui extends JFrame {
 
     public void updatequeueListPanel(DownloadQueue downloadQueue) {
         queueListPanel.removeAll();
+        Iterator it = queueDownloadsList.iterator();
         g3.setRows(0);
-        for (int i = 0; i < downloadQueue.getItems().size(); i++) {
-            DownloadPanel tmpDlPanel = new DownloadPanel();
-            tmpDlPanel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
-                        DownloadInfoFrame downloadInfoFrame = new DownloadInfoFrame(tmpDlPanel.getDownload());
-                    } else if (e.getClickCount() == 1) {
-                        if (tmpDlPanel.isSelected()) {
-                            tmpDlPanel.select();
-                        } else
-                            tmpDlPanel.select();
-                    } else if (e.getClickCount() == 2) {
-                        tmpDlPanel.getDownload().open();
-                    }
-                }
-            });
-            tmpDlPanel.getDlSmallButtonsAsLabels()[1].addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    tmpDlPanel.getDownload().openFolder();
-                }
-            });
-            tmpDlPanel.getDlSmallButtonsAsLabels()[0].addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    tmpDlPanel.getDownload().cancel();
-                }
-            });
-
-            tmpDlPanel.getDlSmallButtonsAsLabels()[2].addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    tmpDlPanel.getDownload().resume();
-                }
-            });
-            tmpDlPanel.addDownload(downloadQueue.getItems().get(i));
-            queueListPanel.add(tmpDlPanel);
-            g3.setRows(g3.getRows() + 1);
+        while (it.hasNext()) {
+            DownloadPanel tempDlPanel = (DownloadPanel) it.next();
+            if (downloadQueue == downloadCollection.findSpecialDownloadQueue(tempDlPanel.getDownload())) {
+                queueListPanel.add(tempDlPanel);
+                g3.setRows(g3.getRows() + 1);
+            }
         }
         validate();
     }
