@@ -1,5 +1,6 @@
 package gui.Panels;
 
+import ActionHandlers.PanelSelectionHandlers;
 import Download.Download;
 import gui.Colors;
 import gui.Icons;
@@ -8,6 +9,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * This class represents a Download panel as a list panel
@@ -28,8 +31,11 @@ public class DownloadPanel extends JPanel {
     private Border selectedBorder;
     private Border defaultBorder;
 
+    private PanelSelectionHandlers psh;
+
     public DownloadPanel() {
         super(new BorderLayout());
+        psh = new PanelSelectionHandlers();
         defaultBorder = BorderFactory.createMatteBorder(0, 0, 5, 0, Colors.LowerDarkBlue2);
         selectedBorder = BorderFactory.createMatteBorder(0, 0, 5, 0, Color.YELLOW);
         setBorder(defaultBorder);
@@ -85,6 +91,31 @@ public class DownloadPanel extends JPanel {
             buttonsPanel.add(dlSmallButtonsAsLabels[i]);
         }
         add(insidePanel);
+
+        dlSmallButtonsAsLabels[1].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                download.openFolder();
+            }
+        });
+        dlSmallButtonsAsLabels[0].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                download.cancel();
+            }
+        });
+
+        dlSmallButtonsAsLabels[2].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                download.resume();
+            }
+        });
+
+        addMouseListener(psh);
     }
 
     /**
@@ -107,6 +138,15 @@ public class DownloadPanel extends JPanel {
      */
     public Download getDownload() {
         return download;
+    }
+
+    public void changeDownload(Download newDownload) {
+        download = newDownload;
+        downloadName.setText(newDownload.getFileName());
+        fileSize.setText(newDownload.getDownloadedSize() + " / " + newDownload.getFullFileSize() + "MB");
+        dateAndTime.setText(newDownload.getDate() + " " + newDownload.getTime());
+        insidePanel.remove(download.getDownloadProgressBar());
+        insidePanel.add(newDownload.getDownloadProgressBar());
     }
 
     /**
