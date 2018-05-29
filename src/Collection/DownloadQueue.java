@@ -45,6 +45,7 @@ public class DownloadQueue {
     public boolean add(Download download) {
         if (!(items.contains(download))) {
             items.add(download);
+            MainGui.downloadCollection.getQueueDownloads().add(download);
             return true;
         }
         return false;
@@ -53,6 +54,7 @@ public class DownloadQueue {
     public boolean remove(Download download) {
         if (items.contains(download)) {
             items.remove(download);
+            MainGui.downloadCollection.getQueueDownloads().remove(download);
             return true;
         }
         return false;
