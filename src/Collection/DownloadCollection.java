@@ -10,6 +10,7 @@ public class DownloadCollection {
     private ArrayList<Download> processingDownloads;
     private ArrayList<Download> completedDownloads;
     private ArrayList<Download> queueDownloads;
+
     private ArrayList<DownloadQueue> queues;
 
     public int maximumSizeOfProcessingDl;
@@ -46,11 +47,7 @@ public class DownloadCollection {
     }
 
     public void addQueueDownload(Download download, DownloadQueue queue) {
-        if (!queueDownloads.contains(download)) {
-            download.setInQueue(true);
-            queueDownloads.add(download);
-            queue.add(download);
-        }
+        queue.add(download);
     }
 
     public void removeProcessingDownload(Download download) {
@@ -65,10 +62,7 @@ public class DownloadCollection {
     }
 
     public void removeDownloadFromQueue(Download download, DownloadQueue queue) {
-        if (queueDownloads.contains(download)) {
-            queueDownloads.remove(download);
-            queue.remove(download);
-        }
+        queue.remove(download);
     }
 
     public ArrayList<Download> getCompletedDownloads() {
