@@ -10,6 +10,7 @@ public class DownloadCollection {
     private ArrayList<Download> processingDownloads;
     private ArrayList<Download> completedDownloads;
     private ArrayList<Download> queueDownloads;
+    private ArrayList<Download> removedDownloads;
 
     private ArrayList<DownloadQueue> queues;
 
@@ -19,6 +20,7 @@ public class DownloadCollection {
         processingDownloads = new ArrayList<>();
         completedDownloads = new ArrayList<>();
         queueDownloads = new ArrayList<>();
+        removedDownloads = new ArrayList<>();
         queues = new ArrayList<>();
     }
 
@@ -153,5 +155,18 @@ public class DownloadCollection {
             }
         }
         return null;
+    }
+
+    public void addRemovedDownload(Download removedDownload) {
+        if (!removedDownloads.contains(removedDownload))
+            removedDownloads.add(removedDownload);
+    }
+
+    public void removeRemovedDownload(Download removedDownload) {
+        removedDownloads.remove(removedDownload);
+    }
+
+    public ArrayList<Download> getRemovedDownloads() {
+        return removedDownloads;
     }
 }
