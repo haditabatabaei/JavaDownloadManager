@@ -9,14 +9,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class QueuePanel extends JFrame {
-    public static JFrame frame;
-    public static JComboBox<String> comboBox;
+    public static JFrame frame = new JFrame("Queue Settings");
+    public static JComboBox<String> comboBox = new JComboBox<>();
     private JButton[] queueOperationButtons;
     private JPanel buttonsPanel;
     private JPanel largerButtonsPanel;
 
     public QueuePanel() {
-        frame = new JFrame("Queue Settings");
         frame.setLocation(120, 120);
         frame.setSize(400, 240);
         frame.setResizable(false);
@@ -48,9 +47,6 @@ public class QueuePanel extends JFrame {
             queueOperationButtons[i].addActionListener(qoh);
             buttonsPanel.add(queueOperationButtons[i]);
         }
-
-
-        comboBox = new JComboBox<>();
         comboBox.setEditable(false);
 
         largerButtonsPanel.add(buttonsPanel, BorderLayout.NORTH);
@@ -60,11 +56,14 @@ public class QueuePanel extends JFrame {
     }
 
     public static void updateQueueList(ArrayList<DownloadQueue> downloadQueueList) {
-        comboBox.removeAllItems();
-        for (DownloadQueue downloadQueue : downloadQueueList) {
-            comboBox.addItem(downloadQueue.getName());
+        if (!(comboBox == null)) {
+            comboBox.removeAllItems();
+
+            for (DownloadQueue downloadQueue : downloadQueueList) {
+                comboBox.addItem(downloadQueue.getName());
+            }
+            frame.revalidate();
         }
-        frame.revalidate();
     }
 
     public void makeVisible() {

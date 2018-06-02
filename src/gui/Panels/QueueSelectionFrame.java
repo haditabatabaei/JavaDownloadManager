@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class QueueSelectionFrame extends JFrame {
-    public static JComboBox comboBox;
+    public static JComboBox<String> comboBox;
     private JButton selectButton;
     private JButton cancelButton;
 
@@ -28,8 +28,11 @@ public class QueueSelectionFrame extends JFrame {
         insideButtonPanel.add(selectButton);
         insideButtonPanel.add(cancelButton);
         buttonsPanel.add(insideButtonPanel, BorderLayout.NORTH);
-
-        add(comboBox, BorderLayout.NORTH);
+        if (comboBox != null) {
+            add(comboBox, BorderLayout.NORTH);
+        } else {
+            add(new JLabel("No Queue.First add in new download window."), BorderLayout.NORTH);
+        }
         add(buttonsPanel, BorderLayout.CENTER);
 
 
