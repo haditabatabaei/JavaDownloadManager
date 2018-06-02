@@ -13,6 +13,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,16 +42,25 @@ public class MainGui extends JFrame {
     private GridLayout g1;
     private GridLayout g2;
     private GridLayout g3;
+    private GridLayout g4;
 
     private JButton processingBtn;
     private JButton completedBtn;
     private JButton queuesBtn;
-    private JButton defaultBtn;
+    private JButton searchBtn;
 
     private JPanel processingListPanel;
     private JPanel completedListPanel;
     private JPanel queueListPanel;
+    private JPanel searchResultListPanel;
 
+    private File listDownloadFile;
+    private File listQueueFile;
+    private File listRemovedFile;
+    private File filterFile;
+    private File settingsFile;
+
+    private Dimension myPrefDlDim;
 
     public MainGui() {
         super("Java Download Manager");
@@ -60,19 +72,28 @@ public class MainGui extends JFrame {
         completedDownloadsList = new ArrayList<>();
         numberOfMaximumDownloads = 0;
         downloadCollection = new DownloadCollection();
+        myPrefDlDim = new Dimension(0, 80);
+        listDownloadFile = new File("list.jdm");
+        listQueueFile = new File("queue.jdm");
+        listRemovedFile = new File("removed.jdm");
+        filterFile = new File("filter.jdm");
+        settingsFile = new File("settings.jdm");
+        settingsFrame = new SettingsFrame();
+        createFiles();
 
         g1 = new GridLayout(0, 1, 0, 0);
         g2 = new GridLayout(0, 1, 0, 0);
         g3 = new GridLayout(0, 1, 0, 0);
-
+        g4 = new GridLayout(0, 1, 0, 0);
         processingBtn = new JButton("Processing");
         completedBtn = new JButton("Completed");
         queuesBtn = new JButton("Queues");
-        defaultBtn = new JButton("Default");
+        searchBtn = new JButton("Search");
 
         processingListPanel = new JPanel(g1);
         completedListPanel = new JPanel(g2);
         queueListPanel = new JPanel(g3);
+        searchResultListPanel = new JPanel(g4);
 
         setMinimumSize(new Dimension(900, 500));
         setSize(900, 680);
@@ -259,7 +280,7 @@ public class MainGui extends JFrame {
                     item.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            settingsFrame = new SettingsFrame();
+                            settingsFrame.makeVisisble();
                             settingsTask(settingsFrame);
                         }
                     });
@@ -285,7 +306,7 @@ public class MainGui extends JFrame {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             super.mouseClicked(e);
-                            System.exit(0);
+                            closeOperation();
                         }
                     });
                     break;
@@ -328,12 +349,13 @@ public class MainGui extends JFrame {
         leftButtonsList.add(processingBtn);
         leftButtonsList.add(completedBtn);
         leftButtonsList.add(queuesBtn);
-        leftButtonsList.add(defaultBtn);
+        leftButtonsList.add(searchBtn);
         EmptyBorder leftBtnEmpBorder = new EmptyBorder(15, 0, 15, 0);
 
         JPanel processingPanel = new JPanel();
         JPanel completedPanel = new JPanel();
         JPanel queuePanel = new JPanel();
+        JPanel searchResultPanel = new JPanel();
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new OverlayLayout(rightPanel));
@@ -341,18 +363,22 @@ public class MainGui extends JFrame {
         JScrollPane processingScrollPane = new JScrollPane(processingPanel);
         JScrollPane completedScrollPane = new JScrollPane(completedPanel);
         JScrollPane queueScrollPane = new JScrollPane(queuePanel);
+        JScrollPane searchResultScrollPane = new JScrollPane(searchResultPanel);
 
         rightPanel.add(completedScrollPane);
         rightPanel.add(processingScrollPane);
         rightPanel.add(queueScrollPane);
+        rightPanel.add(searchResultScrollPane);
 
         processingScrollPane.setVisible(true);
         completedScrollPane.setVisible(false);
         queueScrollPane.setVisible(false);
+        searchResultScrollPane.setVisible(false);
 
         for (JButton button : leftButtonsList) {
             switch (leftButtonsList.indexOf(button)) {
                 case 0:
+                    button.setHorizontalAlignment(SwingConstants.CENTER);
                     button.setIcon(icons.getProcessingColor());
                     button.addActionListener(new ActionListener() {
                         @Override
@@ -361,37 +387,41 @@ public class MainGui extends JFrame {
                                 processingScrollPane.setVisible(true);
                                 completedScrollPane.setVisible(false);
                                 queueScrollPane.setVisible(false);
+                                searchResultScrollPane.setVisible(false);
                                 System.out.println("I'm in first if");
                             }
                         }
                     });
                     break;
                 case 1:
+                    button.setHorizontalAlignment(SwingConstants.CENTER);
                     button.setIcon(icons.getCompletedColor());
                     button.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             if (!(completedScrollPane.isVisible())) {
-                                processingScrollPane.setVisible(false);
                                 completedScrollPane.setVisible(true);
+                                processingScrollPane.setVisible(false);
                                 queueScrollPane.setVisible(false);
+                                searchResultScrollPane.setVisible(false);
                                 System.out.println("I'm in second if");
                             }
                         }
                     });
                     break;
                 case 2:
+                    button.setHorizontalAlignment(SwingConstants.CENTER);
                     button.setIcon(icons.getQueueColor());
                     button.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
+
                             QueueSelectionFrame queueSelectionFrame = new QueueSelectionFrame();
                             queueSelectionFrame.makeVisible();
                             queueSelectionFrame.getSelectButton().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-
-                                    String selectedQueueName = (String) QueueSelectionFrame.comboBox.getSelectedItem();
+                                    String selectedQueueName = QueueSelectionFrame.comboBox.getSelectedItem() + "";
                                     if (selectedQueueName.isEmpty()) {
                                         JOptionPane.showMessageDialog(null, "Create a queue first. list is empty.", "Error", JOptionPane.WARNING_MESSAGE);
                                     } else {
@@ -401,11 +431,36 @@ public class MainGui extends JFrame {
                                     if (!(queueScrollPane.isVisible())) {
                                         processingScrollPane.setVisible(false);
                                         completedScrollPane.setVisible(false);
+                                        searchResultScrollPane.setVisible(false);
                                         queueScrollPane.setVisible(true);
                                         System.out.println("I'm in third if");
                                     }
                                 }
                             });
+                        }
+                    });
+                    revalidate();
+                    repaint();
+                    break;
+                case 3:
+                    button.setHorizontalAlignment(SwingConstants.CENTER);
+                    button.setIcon(icons.getSearchIconColor());
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+                            try {
+                                String inputSearch = JOptionPane.showInputDialog(null, "Enter part of name or url address:", "Search...", JOptionPane.QUESTION_MESSAGE);
+                                searchAndShowResult(inputSearch);
+                            } catch (NullPointerException e1) {
+                                System.out.println("Null entered in search box.exception handled");
+                            }
+                            if (!(searchResultScrollPane.isVisible())) {
+                                searchResultScrollPane.setVisible(true);
+                                processingScrollPane.setVisible(false);
+                                completedScrollPane.setVisible(false);
+                                queueScrollPane.setVisible(false);
+                            }
                         }
                     });
                     break;
@@ -450,7 +505,7 @@ public class MainGui extends JFrame {
         toolBarButtons.get(5).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                settingsFrame = new SettingsFrame();
+                settingsFrame.makeVisisble();
                 settingsTask(settingsFrame);
             }
         });
@@ -459,11 +514,16 @@ public class MainGui extends JFrame {
         completedPanel.add(completedListPanel, BorderLayout.NORTH);
         processingPanel.add(processingListPanel, BorderLayout.NORTH);
         queuePanel.add(queueListPanel, BorderLayout.NORTH);
+        searchResultPanel.add(searchResultListPanel, BorderLayout.NORTH);
         add(rightPanel, BorderLayout.CENTER);
         add(leftPanel, BorderLayout.WEST);
         setJMenuBar(topMenuBar);
         add(toolBar, BorderLayout.NORTH);
         setVisible(true);
+
+        loadProcessingDownloads();
+        loadQueueDonwloads();
+        loadSettingsFromFile();
         System.out.println("Started. No Errors.");
     }
 
@@ -541,7 +601,6 @@ public class MainGui extends JFrame {
                         tmpDl.setDownloading(true);
                         processingDownloadsList.add(tmpDlPanel);
                         processingListPanel.add(processingDownloadsList.get(processingDownloadsList.size() - 1));
-                        g1.setRows(g1.getRows() + 1);
                         break;
                     case 2:
                         downloadCollection.addProccessingDownload(tmpDl);
@@ -566,6 +625,9 @@ public class MainGui extends JFrame {
                         }
                         break;
                 }
+                g1.setRows(processingListPanel.getComponentCount());
+                //     g2.setRows(processingListPanel.getComponentCount());
+                //    g3.setRows(processingListPanel.getComponentCount());
                 System.out.println("-------------------------AFTER ADD------------------------");
                 downloadCollection.printAllQueuesAndTheirDownload();
                 System.out.println("----------------------------------------------------------");
@@ -606,12 +668,13 @@ public class MainGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 defaultSavePath = settingsFrame.getDefSavePath().getText();
                 String tmp = settingsFrame.getNumberOfDownloads().getText();
-                if (!tmp.equals("default is 0 ( infinite )")) {
-                    numberOfMaximumDownloads = Integer.parseInt(tmp);
+                int maxNumber = Integer.parseInt(tmp);
+                if (maxNumber > 0) {
+                    numberOfMaximumDownloads = maxNumber;
                     settingsFrame.getNumberOfDownloads().setText(numberOfMaximumDownloads + "");
                     setNumberOfMaximumDownloads();
                 }
-
+                saveSettingsToFile();
             }
         });
         settingsFrame.getOk().addActionListener(new ActionListener() {
@@ -619,20 +682,21 @@ public class MainGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 defaultSavePath = settingsFrame.getDefSavePath().getText();
                 String tmp = settingsFrame.getNumberOfDownloads().getText();
-                if (!tmp.equals("0")) {
-                    numberOfMaximumDownloads = Integer.parseInt(tmp);
+                int maxNumber = Integer.parseInt(tmp);
+                if (maxNumber > 0) {
+                    numberOfMaximumDownloads = maxNumber;
                     settingsFrame.getNumberOfDownloads().setText(numberOfMaximumDownloads + "");
                     setNumberOfMaximumDownloads();
                 }
-
-                settingsFrame.setVisible(false);
+                saveSettingsToFile();
+                settingsFrame.makeHidden();
             }
         });
 
         settingsFrame.getCancel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                settingsFrame.setVisible(false);
+                settingsFrame.makeHidden();
             }
         });
         settingsFrame.getDefSavePath().setText(defaultSavePath);
@@ -662,7 +726,7 @@ public class MainGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SystemTray.getSystemTray().remove(icon);
-                System.exit(0);
+                closeOperation();
             }
         });
         aboutItem.addActionListener(new ActionListener() {
@@ -771,9 +835,10 @@ public class MainGui extends JFrame {
                     DownloadPanel tmp = (DownloadPanel) it1.next();
                     if (tmp.isSelected()) {
                         tmp.getDownload().remove();
-                        it1.remove();
+                        downloadCollection.addRemovedDownload(tmp.getDownload());
                         processingListPanel.remove(tmp);
                         downloadCollection.removeProcessingDownload(tmp.getDownload());
+                        it1.remove();
                         g1.setRows(g1.getRows() - 1);
                     }
                 }
@@ -786,6 +851,7 @@ public class MainGui extends JFrame {
                         Download selectedDownload = tmpPanel.getDownload();
                         DownloadQueue selectedDownloadsQueue = downloadCollection.findSpecialDownloadQueue(selectedDownload);
                         tmpPanel.getDownload().remove();
+                        downloadCollection.addRemovedDownload(selectedDownload);
                         queueListPanel.remove(tmpPanel);
                         downloadCollection.removeDownloadFromQueue(selectedDownload, selectedDownloadsQueue);
                         it2.remove();
@@ -799,17 +865,15 @@ public class MainGui extends JFrame {
                     DownloadPanel tmp = (DownloadPanel) it3.next();
                     if (tmp.isSelected()) {
                         tmp.getDownload().remove();
-                        it3.remove();
                         completedListPanel.remove(tmp);
                         downloadCollection.removeCompletedDownload(tmp.getDownload());
+                        downloadCollection.addRemovedDownload(tmp.getDownload());
+                        it3.remove();
                         g2.setRows(g2.getRows() - 1);
                     }
                 }
                 break;
         }
-        System.out.println("-------------------AFTER REMOVE--------------------");
-        downloadCollection.printAllQueuesAndTheirDownload();
-        System.out.println("------------------------------------------------");
         updateDownloadNumbers(processingBtn, completedBtn, queuesBtn);
         revalidate();
     }
@@ -822,9 +886,9 @@ public class MainGui extends JFrame {
             DownloadPanel tempDlPanel = (DownloadPanel) it.next();
             if (downloadQueue == downloadCollection.findSpecialDownloadQueue(tempDlPanel.getDownload())) {
                 queueListPanel.add(tempDlPanel);
-                g3.setRows(g3.getRows() + 1);
             }
         }
+        g3.setRows(queueListPanel.getComponentCount());
         validate();
     }
 
@@ -858,4 +922,436 @@ public class MainGui extends JFrame {
             SwingUtilities.updateComponentTreeUI(getRootPane());
         }
     }
+
+    public void saveOnExitOperation() {
+        try {
+            FileWriter listDownloadFileWriter = new FileWriter(listDownloadFile, false);
+            BufferedWriter bufferedWriter = new BufferedWriter(listDownloadFileWriter);
+            for (Download download : downloadCollection.getProcessingDownloads()) {
+                bufferedWriter.write(download.toStringForSave());
+            }
+            System.out.println("Download Processing list saved in list.jdm");
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadProcessingDownloads() {
+        System.out.println("Loading Downloads From list.jdm");
+        try {
+            String line;
+            FileReader fileReader = new FileReader(listDownloadFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String fileName = "";
+            String fileUrlAddress = "";
+            String queueName = "";
+            String date = "";
+            String time = "";
+            String savePath = "";
+            boolean isInQueue = true;
+            boolean downloading = true;
+            boolean launchedAfter = true;
+            int fullSize = 0;
+            int downloadedSize = 0;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.startsWith("{")) {
+
+                } else if (line.startsWith("}")) {
+                    Download tmpDownload = new Download(fileUrlAddress, fileName, fullSize);
+                    tmpDownload.setDownloading(downloading);
+                    tmpDownload.setInQueue(isInQueue);
+                    tmpDownload.setSavePath(savePath);
+                    tmpDownload.setQueueName(queueName);
+                    tmpDownload.setDownloadedSize(downloadedSize);
+                    tmpDownload.setDate(date);
+                    tmpDownload.setTime(time);
+                    tmpDownload.setLaunchedAfter(launchedAfter);
+                    int downloadStatus = 1;
+
+                    if (tmpDownload.isInQueue())
+                        downloadStatus = 3;
+
+                    DownloadPanel tmpDlPanel = new DownloadPanel();
+
+                    tmpDlPanel.addDownload(tmpDownload);
+                    tmpDlPanel.setPreferredSize(myPrefDlDim);
+                    switch (downloadStatus) {
+                        case 1:
+                            downloadCollection.addProccessingDownload(tmpDownload);
+                            tmpDownload.setDownloading(true);
+                            processingDownloadsList.add(tmpDlPanel);
+                            processingListPanel.add(processingDownloadsList.get(processingDownloadsList.size() - 1));
+                            break;
+/*                        case 2:
+                            downloadCollection.addProccessingDownload(tmpDownload);
+                            downloadCollection.getProcessingDownloads().get(downloadCollection.getProcessingDownloads().size() - 1).setDownloadedSize(newDownloadFrame.getFullSize());
+                            processingDownloadsList.add(tmpDlPanel);
+                            g2.setRows(g2.getRows() + 1);
+                            processingListPanel.add(processingDownloadsList.get(downloadCollection.getProcessingDownloads().size() - 1));
+                            break;*/
+                        case 3:
+                            if (!queueName.isEmpty()) {
+                                DownloadQueue selectedQueue = downloadCollection.getQueueByName(queueName);
+                                downloadCollection.addQueueDownload(tmpDownload, selectedQueue);
+                                queueDownloadsList.add(tmpDlPanel);
+                                queueListPanel.add(tmpDlPanel);
+                                g3.setRows(g3.getRows() + 1);
+                                System.out.println("Adding download completed.(Queue download added)");
+                            } else {
+                                System.out.println("No Queue.");
+                            }
+                            break;
+                    }
+                    g1.setRows(processingListPanel.getComponentCount());
+                    //     g2.setRows(processingListPanel.getComponentCount());
+                    //    g3.setRows(processingListPanel.getComponentCount());
+
+                    // System.out.println("-------------------------AFTER ADD------------------------");
+                    // downloadCollection.printAllQueuesAndTheirDownload();
+                    //System.out.println("----------------------------------------------------------");
+
+                    revalidate();
+                    updateDownloadNumbers(processingBtn, completedBtn, queuesBtn);
+                    tmpDlPanel.getDownload().start();
+
+                } else {
+                    if (line.contains("[FILENAME]")) {
+                        fileName = line.replace("[FILENAME]:", "");
+                    } else if (line.contains("[DOWNLOADURL]")) {
+                        fileUrlAddress = line.replace("[DOWNLOADURL]:", "");
+                    } else if (line.contains("[FULLSIZE]")) {
+                        fullSize = Integer.parseInt(line.replace("[FULLSIZE]:", ""));
+                    } else if (line.contains("[DOWNLOADED]")) {
+                        downloadedSize = Integer.parseInt(line.replace("[DOWNLOADED]:", ""));
+                    } else if (line.contains("[QUEUENAME]")) {
+                        String tmp = line.replace("[QUEUENAME]:", "");
+                        if (tmp.isEmpty())
+                            isInQueue = false;
+                        else {
+                            isInQueue = true;
+                            queueName = tmp;
+                        }
+                    } else if (line.contains("[DATE]")) {
+                        date = line.replace("[DATE]:", "");
+                    } else if (line.contains("[TIME]")) {
+                        time = line.replace("[TIME]:", "");
+                    } else if (line.contains("[SAVEPATH]")) {
+                        savePath = line.replace("[SAVEPATH]:", "");
+                    } else if (line.contains("[DOWNLOADING]")) {
+                        String tmp = line.replace("[DOWNLOADING]:", "");
+                        switch (tmp) {
+                            case "true":
+                                downloading = true;
+                                break;
+                            case "false":
+                                downloading = false;
+                                break;
+                        }
+                    } else if (line.contains("[LAUNCHAFTER]")) {
+                        String tmp = line.replace("[LAUNCHAFTER]:", "");
+                        switch (tmp) {
+                            case "true":
+                                launchedAfter = true;
+                                break;
+                            case "false":
+                                launchedAfter = false;
+                                break;
+                        }
+                    }
+                }
+            }
+            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createFiles() {
+        try {
+            if (listDownloadFile.createNewFile()) {
+                System.out.println("download list file created.");
+            } else
+                System.out.println("download list file already existed.");
+            if (listQueueFile.createNewFile())
+                System.out.println("queue list file created.");
+            else
+                System.out.println("queue list file already exist.");
+
+            if (settingsFile.createNewFile())
+                System.out.println("setting created.");
+            else
+                System.out.println("settings existed.");
+
+            if (settingsFile.createNewFile())
+                System.out.println("filter file created.");
+            else
+                System.out.println("filter file existed.");
+
+            if (listRemovedFile.createNewFile())
+                System.out.println("removed downloads file created.");
+            else
+                System.out.println("removed downloads file exist.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadSettingsFromFile() {
+        try {
+            FileReader fileReader = new FileReader(settingsFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            FileReader fileReader2 = new FileReader(filterFile);
+            BufferedReader bufferedReader2 = new BufferedReader(fileReader2);
+
+            String line;
+            String maxNumber = "";
+            String defaultSavePath = "";
+
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.startsWith("[MAXNUMBER]")) {
+                    maxNumber = line.replace("[MAXNUMBER]:", "");
+                } else if (line.startsWith("[DEFAULTSAVEPATH]")) {
+                    defaultSavePath = line.replace("[DEFAULTSAVEPATH]:", "");
+                }
+            }
+            bufferedReader.close();
+            settingsFrame.getNumberOfDownloads().setText(maxNumber);
+            settingsFrame.getDefSavePath().setText(defaultSavePath);
+            this.defaultSavePath = defaultSavePath;
+            numberOfMaximumDownloads = Integer.parseInt(maxNumber);
+            setNumberOfMaximumDownloads();
+
+            line = "";
+            while ((line = bufferedReader2.readLine()) != null) {
+                line = line.replace("[FILTERSITE]:", "");
+                SettingsFrame.filteredCombobox.addItem(line);
+            }
+            SettingsFrame.filteredCombobox.revalidate();
+            bufferedReader2.close();
+
+            System.out.println("Settings from loaded from settings.jdm");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveSettingsToFile() {
+        try {
+            FileWriter fileWriter = new FileWriter(settingsFile);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            FileWriter fileWriter2 = new FileWriter(filterFile);
+            BufferedWriter bufferedWriter2 = new BufferedWriter(fileWriter2);
+
+            String defaultSavePath = settingsFrame.getDefSavePath().getText();
+            String maxNumber = settingsFrame.getNumberOfDownloads().getText();
+            String defaultInfo = "{\n[MAXNUMBER]:" + maxNumber + "\n[DEFAULTSAVEPATH]:" + defaultSavePath + "\n}";
+            String filterInfo = "";
+            for (int i = 0; i < SettingsFrame.filteredCombobox.getItemCount(); i++) {
+                filterInfo += "[FILTERSITE]:" + SettingsFrame.filteredCombobox.getItemAt(i) + "\n";
+            }
+            bufferedWriter.write(defaultInfo);
+            bufferedWriter2.write(filterInfo);
+            bufferedWriter.close();
+            bufferedWriter2.close();
+
+
+            System.out.println("Settings saved to settings.jdm");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveRemovedToFile() {
+        try {
+            FileWriter fileWriter = new FileWriter(listRemovedFile, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (Download removedDownload : downloadCollection.getRemovedDownloads()) {
+                bufferedWriter.write(removedDownload.toRemovedString());
+            }
+            bufferedWriter.close();
+            System.out.println("Removed downloads saved in removed.jdm");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void saveRemovedToFile(Download removedDownload) {
+
+    }
+
+    public void loadQueueDonwloads() {
+        try {
+            FileReader fileReader = new FileReader(listQueueFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            String fileName = "";
+            String fileUrlAddress = "";
+            String queueName = "";
+            String date = "";
+            String time = "";
+            String savePath = "";
+            boolean isInQueue = true;
+            boolean downloading = true;
+            boolean launchedAfter = true;
+            int fullSize = 0;
+            int downloadedSize = 0;
+            DownloadQueue selectedQueue;
+            Download selectedDownload;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains("{QUEUENAME}")) {
+                    queueName = line.replace("{QUEUENAME}:", "");
+                    downloadCollection.addQueue(queueName, LocalTime.now().toString(), LocalDate.now().toString());
+                    //  QueuePanel.comboBox.addItem(queueName);
+                    //  QueueSelectionFrame.comboBox.addItem(queueName);
+                } else if (line.equals("}")) {
+                    /* ADD DOWNLOAD */
+                    Download tmpDownload = new Download(fileUrlAddress, fileName, fullSize);
+                    tmpDownload.setDownloading(downloading);
+                    tmpDownload.setInQueue(isInQueue);
+                    tmpDownload.setSavePath(savePath);
+                    tmpDownload.setQueueName(queueName);
+                    tmpDownload.setDownloadedSize(downloadedSize);
+                    tmpDownload.setDate(date);
+                    tmpDownload.setTime(time);
+                    tmpDownload.setLaunchedAfter(launchedAfter);
+
+                    DownloadPanel tmpDlPanel = new DownloadPanel();
+
+                    tmpDlPanel.addDownload(tmpDownload);
+                    tmpDlPanel.setPreferredSize(myPrefDlDim);
+
+
+                    selectedQueue = downloadCollection.getQueueByName(queueName);
+                    downloadCollection.addQueueDownload(tmpDownload, selectedQueue);
+                    queueDownloadsList.add(tmpDlPanel);
+                    queueListPanel.add(tmpDlPanel);
+                    g3.setRows(g3.getRows() + 1);
+                    System.out.println("Adding download completed.(Queue download added)");
+
+                    g1.setRows(processingListPanel.getComponentCount());
+                    //     g2.setRows(processingListPanel.getComponentCount());
+                    //    g3.setRows(processingListPanel.getComponentCount());
+
+                    revalidate();
+                    updateDownloadNumbers(processingBtn, completedBtn, queuesBtn);
+                    tmpDlPanel.getDownload().start();
+
+                } else if (line.equals("{")) {
+
+                } else {
+                    if (line.contains("[FILENAME]")) {
+                        fileName = line.replace("[FILENAME]:", "");
+                    } else if (line.contains("[DOWNLOADURL]")) {
+                        fileUrlAddress = line.replace("[DOWNLOADURL]:", "");
+                    } else if (line.contains("[FULLSIZE]")) {
+                        fullSize = Integer.parseInt(line.replace("[FULLSIZE]:", ""));
+                    } else if (line.contains("[DOWNLOADED]")) {
+                        downloadedSize = Integer.parseInt(line.replace("[DOWNLOADED]:", ""));
+                    } else if (line.contains("[QUEUENAME]")) {
+                        String tmp = line.replace("[QUEUENAME]:", "");
+                        isInQueue = true;
+                        queueName = tmp;
+                    } else if (line.contains("[DATE]")) {
+                        date = line.replace("[DATE]:", "");
+                    } else if (line.contains("[TIME]")) {
+                        time = line.replace("[TIME]:", "");
+                    } else if (line.contains("[SAVEPATH]")) {
+                        savePath = line.replace("[SAVEPATH]:", "");
+                    } else if (line.contains("[DOWNLOADING]")) {
+                        String tmp = line.replace("[DOWNLOADING]:", "");
+                        switch (tmp) {
+                            case "true":
+                                downloading = true;
+                                break;
+                            case "false":
+                                downloading = false;
+                                break;
+                        }
+                    } else if (line.contains("[LAUNCHAFTER]")) {
+                        String tmp = line.replace("[LAUNCHAFTER]:", "");
+                        switch (tmp) {
+                            case "true":
+                                launchedAfter = true;
+                                break;
+                            case "false":
+                                launchedAfter = false;
+                                break;
+                        }
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e)
+
+        {
+            e.printStackTrace();
+        }
+        System.out.println("Queue Downloads loaded from queue.jdm.");
+    }
+
+    public void saveQueueDownloadsToFile() {
+        try {
+            String toWrite = "";
+            FileWriter fileWriter = new FileWriter(listQueueFile);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (DownloadQueue downloadQueue : downloadCollection.getQueues()) {
+                toWrite += "{QUEUENAME}:" + downloadQueue.getName() + "\n";
+                for (Download download : downloadQueue.getItems()) {
+                    toWrite += download.toStringForSave();
+                }
+            }
+            bufferedWriter.write(toWrite);
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Queue downloads saved to queue.jdm");
+    }
+
+    public void saveToQueueFile() {
+
+    }
+
+    public void closeOperation() {
+        saveRemovedToFile();
+        saveOnExitOperation();
+        saveQueueDownloadsToFile();
+        System.exit(0);
+    }
+
+    public void searchAndShowResult(String inputString) {
+        ArrayList<DownloadPanel> resultDownloadPanels = new ArrayList<>();
+        searchResultListPanel.removeAll();
+        for (DownloadPanel downloadPanel : processingDownloadsList)
+            if (downloadPanel.getDownload().getFileName().contains(inputString) || downloadPanel.getDownload().getUrlAddress().contains(inputString))
+                resultDownloadPanels.add(downloadPanel);
+
+        for (DownloadQueue queue : downloadCollection.getQueues())
+            for (Download download : queue.getItems()) {
+                if (download.getUrlAddress().contains(inputString) || download.getFileName().contains(inputString)) {
+                    DownloadPanel tmpPanel = new DownloadPanel();
+                    tmpPanel.addDownload(download);
+                    resultDownloadPanels.add(tmpPanel);
+                }
+            }
+        for (DownloadPanel downloadPanel : completedDownloadsList)
+            if (downloadPanel.getDownload().getFileName().contains(inputString) || downloadPanel.getDownload().getUrlAddress().contains(inputString))
+                resultDownloadPanels.add(downloadPanel);
+
+        for (DownloadPanel downloadPanel : resultDownloadPanels) {
+            searchResultListPanel.add(downloadPanel);
+        }
+        g4.setRows(searchResultListPanel.getComponentCount());
+        revalidate();
+        System.out.println("Search Result showed.");
+    }
+
 }
