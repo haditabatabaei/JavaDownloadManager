@@ -294,6 +294,38 @@ public class Download {
     }
 
     public void setQueueName(String queueName) {
-        this.queueName = queueName;
+        if (isInQueue)
+            this.queueName = queueName;
+    }
+
+    public String toStringForSave() {
+
+        String toReturn = "{\n[FILENAME]:" + fileName + "\n[DOWNLOADURL]:" + urlAddress;
+        toReturn += "\n[FULLSIZE]:" + fullFileSize + "\n[DOWNLOADED]:" + downloadedSize;
+        if (isInQueue()) {
+            toReturn += "\n[QUEUENAME]:" + queueName;
+        } else {
+            toReturn += "\n[QUEUENAME]:";
+        }
+        toReturn += "\n[DATE]:" + date + "\n[TIME]:" + time + "\n[SAVEPATH]:" + savePath;
+        if (isDownloading())
+            toReturn += "\n[DOWNLOADING]:true";
+        else
+            toReturn += "\n[DOWNLOADING]:false";
+        if (isLaunchedAfter)
+            toReturn += "\n[LAUNCHAFTER]:true";
+        else
+            toReturn += "\n[LAUNCHAFTER]:false";
+        toReturn += "\n}\n";
+
+        return toReturn;
+    }
+
+    public String toRemovedString() {
+        return "{\n[FILENAME]:" + fileName + "\n[DOWNLOADURL]:" + urlAddress + "\n}";
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
