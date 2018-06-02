@@ -1,5 +1,6 @@
 package gui.Panels;
 
+import ActionHandlers.FilterSiteButtonHandler;
 import ActionHandlers.NewFrameButtonHoverHandler;
 import gui.Colors;
 import gui.Icons;
@@ -26,24 +27,41 @@ public class SettingsFrame extends JFrame {
 
     private JPanel southPanel;
     private JPanel insideSouthPanel;
+    private JPanel comboPanel;
+    private JPanel insideComboPanel;
+    private JPanel comboButtonPanel;
 
-
+    public static JComboBox<String> filteredCombobox;
+    private JLabel filterLabel;
     private JButton apply;
     private JButton ok;
     private JButton cancel;
 
+
+    private JButton addSiteBtn;
+    private JButton removeSiteBtn;
     private JFileChooser fileChooser;
 
     public SettingsFrame() {
         super("Settings");
-        setSize(480, 150);
+        setSize(440, 300);
         setLocation(100, 100);
         setResizable(false);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         icons = new Icons();
         downloadOptions = new JPanel(new GridLayout(3, 1, 0, 5));
+        comboPanel = new JPanel(new BorderLayout());
+        insideComboPanel = new JPanel(new GridLayout(3, 1, 5, 5));
+        filteredCombobox = new JComboBox<>();
+        filterLabel = new JLabel("Filter Sites :");
+        comboButtonPanel = new JPanel(new GridLayout(1, 2, 5, 5));
 
+        addSiteBtn = new JButton("Add");
+        removeSiteBtn = new JButton("Remove");
+
+        comboButtonPanel.add(addSiteBtn);
+        comboButtonPanel.add(removeSiteBtn);
 
         downloadsNumberPanel = new JPanel(new BorderLayout());
         numberOfDownloads = new JTextField("default is 0 ( infinite )");
@@ -104,9 +122,14 @@ public class SettingsFrame extends JFrame {
         southPanel.add(insideSouthPanel, BorderLayout.EAST);
         add(southPanel, BorderLayout.SOUTH);
         add(downloadOptions, BorderLayout.NORTH);
-        setVisible(true);
-
-
+        add(comboPanel, BorderLayout.CENTER);
+        comboPanel.add(insideComboPanel, BorderLayout.NORTH);
+        insideComboPanel.add(filterLabel);
+        insideComboPanel.add(filteredCombobox);
+        insideComboPanel.add(comboButtonPanel);
+        FilterSiteButtonHandler fsbh = new FilterSiteButtonHandler();
+        addSiteBtn.addActionListener(fsbh);
+        removeSiteBtn.addActionListener(fsbh);
         fileChooserOpener.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -168,4 +191,21 @@ public class SettingsFrame extends JFrame {
     public JButton getOk() {
         return ok;
     }
+
+    public void makeVisisble() {
+        setVisible(true);
+    }
+
+    public void makeHidden() {
+        setVisible(false);
+    }
+
+    public static boolean hasDuplicateInComboBox(String inputSiteUrl) {
+        for (int i = 0; i < filteredCombobox.getItemCount(); i++) {
+            if (filteredCombobox.getItemAt(i).contains(inputSiteUrl))
+                return true;
+        }
+        return false;
+    }
+
 }
