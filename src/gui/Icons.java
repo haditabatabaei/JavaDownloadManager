@@ -37,6 +37,11 @@ public class Icons {
     private final ImageIcon dateIcon = new ImageIcon(getClass().getResource("..//icons//icons8_Calendar_32px.png"));
     private final ImageIcon runIcon = new ImageIcon(getClass().getResource("..//icons//icons8_Run_Command_32px.png"));
     private final ImageIcon searchIconColor = new ImageIcon(getClass().getResource("..//icons//icons8_Search_32px.png"));
+    private final ImageIcon sortColor = new ImageIcon(getClass().getResource("..//icons//icons8_Sorting_32px.png"));
+
+    public ImageIcon getSortColor() {
+        return sortColor;
+    }
 
     public ImageIcon getSearchIconColor() {
         return searchIconColor;
