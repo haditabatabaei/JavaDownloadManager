@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
 
 
 /**
@@ -83,7 +82,6 @@ public class NewDownloadFrame extends JFrame {
         insideDirPanel.add(folderIcon, BorderLayout.EAST);
         insideDirPanel.add(savePath, BorderLayout.CENTER);
 
-        fullSize = new JLabel((new Random().nextInt(300) + 10) + "MB");
         fullSizeTooltip = new JLabel("Size : ");
         fullSizeTooltip.setIcon(icons.getMicroSdIcon());
         final ButtonGroup btnGp = new ButtonGroup();
@@ -131,7 +129,7 @@ public class NewDownloadFrame extends JFrame {
         iconsPanel.add(addressIcon);
         iconsPanel.add(fileIcon);
         iconsPanel.add(fullSizeTooltip);
-
+        fullSize = new JLabel();
         textFieldPanel.add(addressTextField);
         textFieldPanel.add(nameTextField);
         textFieldPanel.add(fullSize);
@@ -236,9 +234,9 @@ public class NewDownloadFrame extends JFrame {
      *
      * @return full size
      */
-    public int getFullSize() {
+    public float getFullSize() {
         String justNumber = fullSize.getText().replace("MB", "");
-        return Integer.parseInt(justNumber);
+        return Float.parseFloat(justNumber);
     }
 
     /**
@@ -284,5 +282,9 @@ public class NewDownloadFrame extends JFrame {
      */
     public JTextField getSavePath() {
         return savePath;
+    }
+
+    public void setFullSize(float fullSize) {
+        this.fullSize.setText(fullSize + "MB");
     }
 }

@@ -1,7 +1,7 @@
 package gui.Panels;
 
 import ActionHandlers.PanelSelectionHandlers;
-import Download.Download;
+import download.Download;
 import gui.Colors;
 import gui.Icons;
 
@@ -184,4 +184,25 @@ public class DownloadPanel extends JPanel {
     public JLabel[] getDlSmallButtonsAsLabels() {
         return dlSmallButtonsAsLabels;
     }
+
+
+    public void print() {
+        System.out.println(toString());
+    }
+
+    public String toString() {
+        return getDownload().toString();
+    }
+
+    public void updateSize() {
+        float downloadedInMB = download.getDownloadedSize() / (1024 * 1024);
+        float fullInMb = download.getFullFileSize() / (1024 * 1024);
+        fileSize.setText(downloadedInMB + " / " + fullInMb + " MB");
+        revalidate();
+    }
+
+    public JLabel getFileSize() {
+        return fileSize;
+    }
 }
+

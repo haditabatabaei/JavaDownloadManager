@@ -3,7 +3,7 @@ package gui.Panels;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import Download.Download;
+import download.Download;
 import gui.Icons;
 import gui.MainGui;
 
