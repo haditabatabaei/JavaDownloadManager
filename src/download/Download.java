@@ -1,17 +1,23 @@
-package Download;
+package download;
 
-import Collection.DownloadQueue;
+import gui.MainGui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Random;
 
 /**
  * This class represents a Download
  */
-public class Download {
+public class Download extends Thread {
     private String fileName;
     private String urlAddress;
     private String date;
@@ -20,8 +26,8 @@ public class Download {
     private JProgressBar downloadProgressBar;
     private boolean isDownloading;
     private boolean isFinished;
-    private final int fullFileSize;
-    private int downloadedSize;
+    private float fullFileSize;
+    private float downloadedSize;
     private boolean isInQueue;
     private ImageIcon fileIcon;
     private String savePath;
@@ -30,8 +36,11 @@ public class Download {
     private boolean isPaused;
     private boolean isCancled;
     private String queueName;
+    public static final int BUFFER_SIZE = 4096;
+    private int downloadSpeed;
 
-    public Download(String urlAddress, String fileName, int fullFileSize) {
+    public Download(String urlAddress, String fileName, float fullFileSize) {
+        super();
         time = LocalTime.now().toString();
         date = LocalDate.now().toString();
         this.urlAddress = urlAddress;
@@ -40,9 +49,6 @@ public class Download {
         downloadProgressBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
         downloadProgressBar.setVisible(true);
         downloadProgressBar.setStringPainted(true);
-        int randomPercent = new Random().nextInt(100);
-        downloadProgressBar.setValue(randomPercent);
-        downloadedSize = (randomPercent * fullFileSize) / 100;
         fileIcon = new ImageIcon(getClass().getResource("..//icons//trash_empty.png"));
         if (downloadProgressBar.getValue() == 100) {
             isDownloading = false;
@@ -50,6 +56,7 @@ public class Download {
         }
         isPaused = false;
         isCancled = false;
+        downloadedSize = 0;
     }
 
     /**
@@ -59,6 +66,10 @@ public class Download {
      */
     public boolean isDownloading() {
         return isDownloading;
+    }
+
+    public int showPercent() {
+        return (int) (downloadedSize / fullFileSize) * 100;
     }
 
     /**
@@ -83,7 +94,7 @@ public class Download {
         return fullFileSize;
     }
 
-    public int getDownloadedSize() {
+    public float getDownloadedSize() {
         return downloadedSize;
     }
 
@@ -114,7 +125,7 @@ public class Download {
         this.fileName = fileName;
     }
 
-    public void setDownloadedSize(int size) {
+    public void setDownloadedSize(float size) {
         downloadedSize = size;
     }
 
@@ -192,8 +203,84 @@ public class Download {
     /**
      * starts Download
      */
-    public void start() {
+    public void startDownload() {
         System.out.println(toString() + " Started");
+
+        File targetFile;
+        synchronized (this) {
+            File dir = new File(savePath + "\\");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            targetFile = new File(savePath + "\\" + fileName);
+            if (!targetFile.exists()) {
+                try {
+                    targetFile.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        HttpURLConnection connection;
+        try {
+            URL url = new URL(urlAddress);
+            if (MainGui.isFilterSite(urlAddress)) {
+
+            } else {
+                connection = (HttpURLConnection) url.openConnection();
+                int responseCode = connection.getResponseCode();
+                System.out.println("Response code : " + responseCode);
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    System.out.println("Connection OK.");
+                    String disposition = connection.getHeaderField("Content-Disposition");
+                    String contentType = connection.getContentType();
+                    int contentLength = connection.getContentLength();
+                    float contentInFloat = (float) contentLength;
+                    System.out.println("Content Length:" + contentLength);
+                    System.out.println("Content-Type = " + contentType);
+                    System.out.println("Content-Disposition = " + disposition);
+                    System.out.println("Content-Length = " + contentInFloat);
+                    System.out.println("fileName = " + fileName);
+                    fullFileSize = contentLength / (1024 * 1024);
+                    System.out.println("full file size :" + fullFileSize + "MB");
+                    downloadedSize = 0;
+                    downloadProgressBar.setValue(0);
+                    InputStream inputStream = connection.getInputStream();
+                    String toSave = savePath + "\\" + fileName;
+                    FileOutputStream outputStream = new FileOutputStream(toSave);
+                    int bytesRead = -1;
+                    byte[] buffer = new byte[BUFFER_SIZE];
+                    System.out.println("Getting bytes now.");
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        long start = System.nanoTime();
+                        outputStream.write(buffer, 0, bytesRead);
+                        System.out.println("number of bytes read : " + bytesRead);
+                        downloadedSize += bytesRead;
+                        downloadProgressBar.setValue(showPercent());
+                        System.out.println("Percent : " + (downloadedSize / contentInFloat) * 100);
+                        downloadProgressBar.setValue((int) ((downloadedSize / contentInFloat) * 100));
+                        long end = System.nanoTime();
+                        System.out.println("Start nano time : " + start);
+                        System.out.println("End nano time : " + end);
+                        float speed = (bytesRead / (end - start));
+                        System.out.println("Speed [Bytes]/[nanoTime]: " + speed);
+                    }
+                    outputStream.close();
+                    inputStream.close();
+                    System.out.println("File Downloaded.");
+                    isDownloading = false;
+                    isFinished = true;
+                    MainGui.checkForFinishedDownloads();
+                } else {
+                    System.out.println("File Did not download.");
+                }
+                connection.disconnect();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -215,7 +302,7 @@ public class Download {
     public void pause() {
         if (!isPaused) {
             isPaused = true;
-            System.out.println(toString() + " Paused");
+            suspend();
         } else {
             System.out.println("is Paused Already.");
         }
@@ -249,11 +336,11 @@ public class Download {
     /**
      * resumes Download
      */
-    public void resume() {
+    public void resumeDownload() {
         if (isPaused || isCancled) {
             isPaused = false;
             isCancled = false;
-            System.out.println(toString() + " Resumed");
+            interrupt();
         } else {
             System.out.println("Not paused or cancel");
         }
@@ -279,13 +366,28 @@ public class Download {
      * opens file
      */
     public void open() {
-        System.out.println(toString() + " Opened.");
+        if (isFinished) {
+            File file = new File(savePath + "\\" + fileName);
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.open(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(toString() + " Opened.");
+        } else
+            System.out.println("Download is not completed.");
     }
 
     /**
      * open file path
      */
     public void openFolder() {
+        try {
+            Desktop.getDesktop().open(new File(savePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println(savePath + " directory opened.");
     }
 
@@ -316,6 +418,12 @@ public class Download {
             toReturn += "\n[LAUNCHAFTER]:true";
         else
             toReturn += "\n[LAUNCHAFTER]:false";
+
+        if (isFinished)
+            toReturn += "\n[FINISHED]:true";
+        else
+            toReturn += "\n[FINISHED]:false";
+
         toReturn += "\n}\n";
 
         return toReturn;
@@ -327,5 +435,11 @@ public class Download {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Run Called.");
+        startDownload();
     }
 }
