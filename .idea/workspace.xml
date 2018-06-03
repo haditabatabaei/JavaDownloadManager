@@ -1,0 +1,1375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="41327986-ad0e-4fee-8587-abcaa4803e59" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/gui/Panels/SortSelectionFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/filter.jdm" beforeDir="false" afterPath="$PROJECT_DIR$/filter.jdm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/list.jdm" beforeDir="false" afterPath="$PROJECT_DIR$/list.jdm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/removed.jdm" beforeDir="false" afterPath="$PROJECT_DIR$/removed.jdm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.jdm" beforeDir="false" afterPath="$PROJECT_DIR$/settings.jdm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/download/Download.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/download/Download.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Icons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Icons.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/MainGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/MainGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Panels/DownloadInfoFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Panels/DownloadInfoFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Panels/DownloadPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Panels/DownloadPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Panels/NewDownloadFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Panels/NewDownloadFrame.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="settings.jdm" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.jdm">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="48">
+              <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DownloadQueue.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Collection/DownloadQueue.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Download.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/download/Download.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="261" column="43" selection-start-line="261" selection-start-column="43" selection-end-line="261" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1943#1944#0" expanded="true" />
+                <element signature="e#1979#1980#0" expanded="true" />
+                <element signature="e#2011#2012#0" expanded="true" />
+                <element signature="e#2077#2078#0" expanded="true" />
+                <element signature="e#2225#2226#0" expanded="true" />
+                <element signature="e#2258#2259#0" expanded="true" />
+                <element signature="e#2404#2405#0" expanded="true" />
+                <element signature="e#2436#2437#0" expanded="true" />
+                <element signature="e#2474#2475#0" expanded="true" />
+                <element signature="e#2509#2510#0" expanded="true" />
+                <element signature="e#2549#2550#0" expanded="true" />
+                <element signature="e#2586#2587#0" expanded="true" />
+                <element signature="e#2638#2639#0" expanded="true" />
+                <element signature="e#2680#2681#0" expanded="true" />
+                <element signature="e#2716#2717#0" expanded="true" />
+                <element signature="e#2747#2748#0" expanded="true" />
+                <element signature="e#2784#2785#0" expanded="true" />
+                <element signature="e#2817#2818#0" expanded="true" />
+                <element signature="e#3230#3231#0" expanded="true" />
+                <element signature="e#3270#3271#0" expanded="true" />
+                <element signature="e#3319#3320#0" expanded="true" />
+                <element signature="e#3356#3357#0" expanded="true" />
+                <element signature="e#3408#3409#0" expanded="true" />
+                <element signature="e#3452#3453#0" expanded="true" />
+                <element signature="e#3479#3480#0" expanded="true" />
+                <element signature="e#3525#3526#0" expanded="true" />
+                <element signature="e#3565#3566#0" expanded="true" />
+                <element signature="e#3597#3598#0" expanded="true" />
+                <element signature="e#3628#3629#0" expanded="true" />
+                <element signature="e#3655#3656#0" expanded="true" />
+                <element signature="e#3686#3687#0" expanded="true" />
+                <element signature="e#3713#3714#0" expanded="true" />
+                <element signature="e#3742#3743#0" expanded="true" />
+                <element signature="e#3769#3770#0" expanded="true" />
+                <element signature="e#3807#3808#0" expanded="true" />
+                <element signature="e#3838#3839#0" expanded="true" />
+                <element signature="e#3893#3894#0" expanded="true" />
+                <element signature="e#3936#3937#0" expanded="true" />
+                <element signature="e#3983#3984#0" expanded="true" />
+                <element signature="e#4018#4019#0" expanded="true" />
+                <element signature="e#4067#4068#0" expanded="true" />
+                <element signature="e#4104#4105#0" expanded="true" />
+                <element signature="e#4139#4140#0" expanded="true" />
+                <element signature="e#4170#4171#0" expanded="true" />
+                <element signature="e#4296#4297#0" expanded="true" />
+                <element signature="e#4336#4337#0" expanded="true" />
+                <element signature="e#4481#4482#0" expanded="true" />
+                <element signature="e#4519#4520#0" expanded="true" />
+                <element signature="e#4710#4711#0" expanded="true" />
+                <element signature="e#4757#4758#0" expanded="true" />
+                <element signature="e#9322#9323#0" expanded="true" />
+                <element signature="e#9353#9354#0" expanded="true" />
+                <element signature="e#9481#9482#0" expanded="true" />
+                <element signature="e#9513#9514#0" expanded="true" />
+                <element signature="e#9581#9582#0" expanded="true" />
+                <element signature="e#9640#9641#0" expanded="true" />
+                <element signature="e#10051#10052#0" expanded="true" />
+                <element signature="e#10082#10083#0" expanded="true" />
+                <element signature="e#10149#10150#0" expanded="true" />
+                <element signature="e#10189#10190#0" expanded="true" />
+                <element signature="e#10845#10846#0" expanded="true" />
+                <element signature="e#10877#10878#0" expanded="true" />
+                <element signature="e#11962#11963#0" expanded="true" />
+                <element signature="e#12054#12055#0" expanded="true" />
+                <element signature="e#12094#12095#0" expanded="true" />
+                <element signature="e#12126#12127#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list.jdm" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/list.jdm">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SortSelectionFrame.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/Panels/SortSelectionFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-601">
+              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2170#2171#0" expanded="true" />
+                <element signature="e#2214#2215#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainGui.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/gui/MainGui.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="16">
+              <caret line="809" selection-start-line="809" selection-end-line="809" />
+              <folding>
+                <element signature="docComment;class#MainGui#0" />
+                <element signature="e#2007#22382#0" />
+                <element signature="class#5098:5308" />
+                <element signature="class#5538:5748" />
+                <element signature="class#5858:6068" />
+                <element signature="class#6237:6447" />
+                <element signature="e#10152#10459#0" />
+                <element signature="class#10896:11180" />
+                <element signature="method#actionPerformed#0;class#10896:11180" />
+                <element signature="class#11281:11498" />
+                <element signature="class#11599:11828" />
+                <element signature="class#15138:15762" />
+                <element signature="method#actionPerformed#0;class#15138:15762" />
+                <element signature="class#15928:16552" />
+                <element signature="method#actionPerformed#0;class#15928:16552" />
+                <element signature="class#16714:18475" />
+                <element signature="method#actionPerformed#0;class#16714:18475" />
+                <element signature="class#17084:18425" />
+                <element signature="method#actionPerformed#0;class#17084:18425" />
+                <element signature="class#18707:19726" />
+                <element signature="method#actionPerformed#0;class#18707:19726" />
+                <element signature="class#19887:20119" />
+                <element signature="class#21067:21435" />
+                <element signature="method#actionPerformed#0;class#21067:21435" />
+                <element signature="class#21529:21741" />
+                <element signature="method#actionPerformed#0;class#21529:21741" />
+                <element signature="e#22388#22559#0" />
+                <element signature="e#22388#23055#0" />
+                <element signature="e#23061#23243#0" />
+                <element signature="e#23061#28961#0" />
+                <element signature="class#23432:28710" />
+                <element signature="method#actionPerformed#0;class#23432:28710" />
+                <element signature="class#28780:28953" />
+                <element signature="e#28967#29043#0" />
+                <element signature="e#28967#29239#0" />
+                <element signature="e#29245#29367#0" />
+                <element signature="e#29245#31222#0" />
+                <element signature="class#29569:30197" />
+                <element signature="method#actionPerformed#0;class#29569:30197" />
+                <element signature="class#30252:30924" />
+                <element signature="method#actionPerformed#0;class#30252:30924" />
+                <element signature="class#30984:31149" />
+                <element signature="e#31228#31295#0" />
+                <element signature="e#31228#32839#0" />
+                <element signature="class#31895:32107" />
+                <element signature="method#actionPerformed#0;class#31895:32107" />
+                <element signature="class#32152:32364" />
+                <element signature="method#actionPerformed#0;class#32152:32364" />
+                <element signature="class#32407:32564" />
+                <element signature="e#32845#32895#0" />
+                <element signature="e#32845#33215#0" />
+                <element signature="e#33572#33652#0" />
+                <element signature="e#34961#35110#0" />
+                <element signature="e#34961#38887#0" />
+                <element signature="e#38893#39428#0" />
+                <element signature="e#39434#39505#0" />
+                <element signature="e#39434#40480#0" />
+                <element signature="e#39562#40474#0" />
+                <element signature="e#40486#41109#0" />
+                <element signature="e#41280#48695#0" />
+                <element signature="e#48701#49805#0" />
+                <element signature="e#49811#51424#0" />
+                <element signature="e#51430#52592#0" />
+                <element signature="e#52598#53165#0" />
+                <element signature="e#53171#53235#0" />
+                <element signature="e#53241#58812#0" />
+                <element signature="e#54286#54329#0" />
+                <element signature="e#54973#55032#0" />
+                <element signature="e#58818#59593#0" />
+                <element signature="e#59599#59637#0" />
+                <element signature="e#59643#59799#0" />
+                <element signature="e#59805#61279#0" />
+                <element signature="e#61285#61584#0" />
+                <element signature="e#61590#61991#0" />
+                <element signature="e#61997#62299#0" />
+                <element signature="e#61509#62470#0" />
+                <element signature="e#61570#62464#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SettingsFrame.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/Panels/SettingsFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="16">
+              <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DownloadCollection.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Collection/DownloadCollection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-555">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+              <folding>
+                <element signature="method#DownloadCollection#0;class#DownloadCollection#0" />
+                <element signature="method#addProccessingDownload#0;class#DownloadCollection#0" />
+                <element signature="method#addCompletedDownload#0;class#DownloadCollection#0" />
+                <element signature="method#removeProcessingDownload#0;class#DownloadCollection#0" />
+                <element signature="method#removeCompletedDownload#0;class#DownloadCollection#0" />
+                <element signature="method#setMaximumSizeOfProcessingDl#0;class#DownloadCollection#0" />
+                <element signature="method#addQueue#0;class#DownloadCollection#0" />
+                <element signature="method#removeQueue#1;class#DownloadCollection#0" />
+                <element signature="method#getQueueByName#0;class#DownloadCollection#0" />
+                <element signature="method#hasDuplicateSelectedQueues#0;class#DownloadCollection#0" />
+                <element signature="method#printAllQueuesAndTheirDownload#0;class#DownloadCollection#0" />
+                <element signature="method#findSpecialDownloadQueue#0;class#DownloadCollection#0" />
+                <element signature="method#addRemovedDownload#0;class#DownloadCollection#0" />
+                <element signature="method#sortArrayList#0;class#DownloadCollection#0" />
+                <element signature="method#swapDownloadPanel#0;class#DownloadCollection#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Colors.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/Colors.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Icons.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/Icons.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-617">
+              <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="25" />
+              <folding>
+                <element signature="docComment;class#Icons#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>insideOptionsPanel</find>
+      <find>selectedQueueName</find>
+      <find>startLabel</find>
+      <find>select</find>
+      <find>Queues</find>
+      <find>addMouseListener</find>
+      <find>updateQueueLis</find>
+      <find>getQueueDownloads</find>
+      <find>queueListPanel</find>
+      <find>g3</find>
+      <find>case 4</find>
+      <find>getDownload</find>
+      <find>button.add</find>
+      <find>listRemove</find>
+      <find>newDownloadTask</find>
+      <find>pause</find>
+      <find>start</find>
+      <find>setDownload</find>
+      <find>checkFor</find>
+      <find>ope</find>
+      <find>doTheJob</find>
+      <find>saveOn</find>
+      <find>load</find>
+      <find>save</find>
+      <find>Integer.par</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$/../../../aplab" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/Run.java" />
+        <option value="$PROJECT_DIR$/src/ActionHandlers/QueueSettingsHandlers.java" />
+        <option value="$PROJECT_DIR$/src/ActionHandlers/QueueSettingsHandler.java" />
+        <option value="$PROJECT_DIR$/src/gui/Panels/QueueSettings.java" />
+        <option value="$PROJECT_DIR$/src/ActionHandlers/QueueOperationHandlers.java" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/gui/Panels/QueuePanel.java" />
+        <option value="$PROJECT_DIR$/src/ActionHandlers/PanelSelectionHandlers.java" />
+        <option value="$PROJECT_DIR$/src/gui/Panels/QueueSelectionFrame.java" />
+        <option value="$PROJECT_DIR$/src/gui/Icons.java" />
+        <option value="$PROJECT_DIR$/src/gui/Panels/SortSelectionFrame.java" />
+        <option value="$PROJECT_DIR$/src/gui/Panels/DownloadInfoFrame.java" />
+        <option value="$PROJECT_DIR$/src/Collection/DownloadQueue.java" />
+        <option value="$PROJECT_DIR$/src/Collection/DownloadCollection.java" />
+        <option value="$PROJECT_DIR$/queue.jdm" />
+        <option value="$PROJECT_DIR$/src/gui/Panels/NewDownloadFrame.java" />
+        <option value="$PROJECT_DIR$/src/gui/Panels/DownloadPanel.java" />
+        <option value="$PROJECT_DIR$/list.jdm" />
+        <option value="$PROJECT_DIR$/src/Connection/ConnectionForSize.java" />
+        <option value="$PROJECT_DIR$/src/download/Download.java" />
+        <option value="$PROJECT_DIR$/src/gui/MainGui.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="135" />
+    <option name="width" value="1575" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Collection" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Connection" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="download" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Midterm Project JDM" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Midterm Project JDM" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+              <item name="Panels" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Hadi-PC\Desktop\Advanced Programming - JAVA\projects\Midterm Project JDM\src\icons" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+    </configuration>
+    <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Run" />
+      <module name="Midterm Project JDM" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Run" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41327986-ad0e-4fee-8587-abcaa4803e59" name="Default" comment="" />
+      <created>1527235594456</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1527235594456</updated>
+      <workItem from="1527235595974" duration="680000" />
+      <workItem from="1527332084430" duration="4630000" />
+      <workItem from="1527509332530" duration="3269000" />
+      <workItem from="1527524512801" duration="10590000" />
+      <workItem from="1527596683024" duration="8540000" />
+      <workItem from="1528005515208" duration="619000" />
+      <workItem from="1528012604444" duration="7920000" />
+      <workItem from="1528030619037" duration="18347000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="54595000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32789117" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.74693877" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.42040816" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20247395" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2952381" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20247395" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.17959183" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.3292517" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="3" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/gui/MainGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5760">
+          <caret line="387" column="69" lean-forward="true" selection-start-line="387" selection-start-column="69" selection-end-line="387" selection-end-column="69" />
+          <folding>
+            <element signature="docComment;class#MainGui#0" />
+            <element signature="e#2007#22382#0" />
+            <element signature="class#5098:5308" />
+            <element signature="class#5538:5748" />
+            <element signature="class#5858:6068" />
+            <element signature="class#6237:6447" />
+            <element signature="e#10152#10459#0" />
+            <element signature="class#10896:11180" />
+            <element signature="method#actionPerformed#0;class#10896:11180" />
+            <element signature="class#11281:11498" />
+            <element signature="class#11599:11828" />
+            <element signature="class#15138:15762" />
+            <element signature="method#actionPerformed#0;class#15138:15762" />
+            <element signature="class#15928:16552" />
+            <element signature="method#actionPerformed#0;class#15928:16552" />
+            <element signature="class#16714:18475" />
+            <element signature="method#actionPerformed#0;class#16714:18475" />
+            <element signature="class#17084:18425" />
+            <element signature="method#actionPerformed#0;class#17084:18425" />
+            <element signature="class#18707:19726" />
+            <element signature="method#actionPerformed#0;class#18707:19726" />
+            <element signature="class#19887:20119" />
+            <element signature="class#21067:21435" />
+            <element signature="method#actionPerformed#0;class#21067:21435" />
+            <element signature="class#21529:21741" />
+            <element signature="method#actionPerformed#0;class#21529:21741" />
+            <element signature="e#22388#22559#0" />
+            <element signature="e#22388#23055#0" />
+            <element signature="e#23061#23243#0" />
+            <element signature="e#23061#28961#0" />
+            <element signature="class#23432:28710" />
+            <element signature="method#actionPerformed#0;class#23432:28710" />
+            <element signature="class#28780:28953" />
+            <element signature="e#28967#29043#0" />
+            <element signature="e#28967#29239#0" />
+            <element signature="e#29245#29367#0" />
+            <element signature="e#29245#31222#0" />
+            <element signature="class#29569:30197" />
+            <element signature="method#actionPerformed#0;class#29569:30197" />
+            <element signature="class#30252:30924" />
+            <element signature="method#actionPerformed#0;class#30252:30924" />
+            <element signature="class#30984:31149" />
+            <element signature="e#31228#31295#0" />
+            <element signature="e#31228#32839#0" />
+            <element signature="class#31895:32107" />
+            <element signature="method#actionPerformed#0;class#31895:32107" />
+            <element signature="class#32152:32364" />
+            <element signature="method#actionPerformed#0;class#32152:32364" />
+            <element signature="class#32407:32564" />
+            <element signature="e#32845#32895#0" />
+            <element signature="e#32845#33215#0" />
+            <element signature="e#33572#33652#0" />
+            <element signature="e#34961#35110#0" />
+            <element signature="e#34961#38887#0" />
+            <element signature="e#38893#39428#0" />
+            <element signature="e#39434#39505#0" />
+            <element signature="e#39434#40480#0" />
+            <element signature="e#39562#40474#0" />
+            <element signature="e#40486#41109#0" />
+            <element signature="e#41280#48695#0" />
+            <element signature="e#48701#49805#0" />
+            <element signature="e#49811#51424#0" />
+            <element signature="e#51430#52592#0" />
+            <element signature="e#52598#53165#0" />
+            <element signature="e#53171#53235#0" />
+            <element signature="e#53241#58812#0" />
+            <element signature="e#54286#54329#0" />
+            <element signature="e#54973#55032#0" />
+            <element signature="e#58818#59593#0" />
+            <element signature="e#59599#59637#0" />
+            <element signature="e#59643#59799#0" />
+            <element signature="e#59805#61279#0" />
+            <element signature="e#61285#61584#0" />
+            <element signature="e#61590#61991#0" />
+            <element signature="e#61997#62299#0" />
+            <element signature="e#61509#62470#0" />
+            <element signature="e#61570#62464#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueueSelectionFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1210#1211#0" expanded="true" />
+            <element signature="e#1254#1255#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueuePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/NewDownloadFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1632">
+          <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="80">
+            <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Run.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+          <folding>
+            <element signature="e#83#84#0" expanded="true" />
+            <element signature="e#142#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Collection/DownloadCollection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1920">
+          <caret line="135" column="11" selection-start-line="135" selection-start-column="11" selection-end-line="135" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Collection/DownloadQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/DownloadInfoFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/DownloadPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ActionHandlers/QueueOperationHandlers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="20" column="23" lean-forward="true" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/MainGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9696">
+          <caret line="637" column="40" selection-start-line="637" selection-start-column="40" selection-end-line="637" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueuePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="78" column="19" lean-forward="true" selection-start-line="78" selection-start-column="19" selection-end-line="78" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/NewDownloadFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueueSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1488">
+          <caret line="99" column="61" selection-start-line="99" selection-start-column="61" selection-end-line="99" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Run.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding>
+            <element signature="e#83#84#0" expanded="true" />
+            <element signature="e#142#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Collection/DownloadCollection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1920">
+          <caret line="135" column="11" lean-forward="true" selection-start-line="135" selection-start-column="11" selection-end-line="135" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Collection/DownloadQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="31" column="43" lean-forward="true" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueuePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="17" column="45" lean-forward="true" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ActionHandlers/QueueOperationHandlers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="864">
+          <caret line="63" column="17" lean-forward="true" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/MainGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9696">
+          <caret line="637" column="40" selection-start-line="637" selection-start-column="40" selection-end-line="637" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/NewDownloadFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2720">
+          <caret line="187" column="22" selection-start-line="187" selection-start-column="22" selection-end-line="187" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueueSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="960">
+          <caret line="63" column="51" selection-start-line="63" selection-start-column="8" selection-end-line="63" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Run.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#83#84#0" expanded="true" />
+            <element signature="e#142#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ActionHandlers/QueueSettingsHandler.java" />
+    <entry file="file://$PROJECT_DIR$/src/ActionHandlers/NewFrameButtonHoverHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ActionHandlers/PanelSelectionHandlers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ActionHandlers/QueueOperationHandlers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="71" column="28" selection-start-line="71" selection-start-column="28" selection-end-line="71" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="80">
+            <caret line="5" selection-start-line="5" selection-end-line="5" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Run.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding>
+            <element signature="e#83#84#0" expanded="true" />
+            <element signature="e#142#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/filter.jdm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/queue.jdm">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Midterm Project JDM.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/removed.jdm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="1" lean-forward="true" selection-start-column="1" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/DownloadPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="206" selection-start-line="206" selection-end-line="206" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2984#3181#0" expanded="true" />
+            <element signature="e#3180#3181#0" expanded="true" />
+            <element signature="e#3235#3428#0" expanded="true" />
+            <element signature="e#3427#3428#0" expanded="true" />
+            <element signature="e#3483#3676#0" expanded="true" />
+            <element signature="e#3675#3676#0" expanded="true" />
+            <element signature="e#4328#4329#0" expanded="true" />
+            <element signature="e#4359#4360#0" expanded="true" />
+            <element signature="e#5391#5392#0" expanded="true" />
+            <element signature="e#5422#5423#0" expanded="true" />
+            <element signature="e#5598#5599#0" expanded="true" />
+            <element signature="e#5643#5644#0" expanded="true" />
+            <element signature="e#5671#5672#0" expanded="true" />
+            <element signature="e#5717#5718#0" expanded="true" />
+            <element signature="e#5749#5750#0" expanded="true" />
+            <element signature="e#5796#5797#0" expanded="true" />
+            <element signature="e#6106#6107#0" expanded="true" />
+            <element signature="e#6137#6138#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/NewDownloadFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2265">
+          <caret line="124" column="30" selection-start-line="124" selection-start-column="30" selection-end-line="124" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5273#6001#0" expanded="true" />
+            <element signature="e#6000#6001#0" expanded="true" />
+            <element signature="e#6690#6691#0" expanded="true" />
+            <element signature="e#6724#6725#0" expanded="true" />
+            <element signature="e#6907#6908#0" expanded="true" />
+            <element signature="e#6946#6947#0" expanded="true" />
+            <element signature="e#7104#7105#0" expanded="true" />
+            <element signature="e#7140#7141#0" expanded="true" />
+            <element signature="e#7281#7282#0" expanded="true" />
+            <element signature="e#7318#7319#0" expanded="true" />
+            <element signature="e#7802#7803#0" expanded="true" />
+            <element signature="e#7839#7840#0" expanded="true" />
+            <element signature="e#8020#8021#0" expanded="true" />
+            <element signature="e#8052#8053#0" expanded="true" />
+            <element signature="e#8222#8223#0" expanded="true" />
+            <element signature="e#8251#8252#0" expanded="true" />
+            <element signature="e#8420#8421#0" expanded="true" />
+            <element signature="e#8448#8449#0" expanded="true" />
+            <element signature="e#8615#8616#0" expanded="true" />
+            <element signature="e#8646#8647#0" expanded="true" />
+            <element signature="e#8598#8599#0" expanded="true" />
+            <element signature="e#8652#8653#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueuePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="66" column="5" lean-forward="true" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueueSelectionFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="40" column="11" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1472#1473#0" expanded="true" />
+            <element signature="e#1516#1517#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/QueueSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-105">
+          <caret line="92" column="51" lean-forward="true" selection-start-line="92" selection-start-column="51" selection-end-line="92" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/DownloadInfoFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1255">
+          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Connection/ConnectionForSize.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="22" column="57" selection-start-line="22" selection-start-column="57" selection-end-line="22" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#826#827#0" expanded="true" />
+            <element signature="e#857#858#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Colors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Icons.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-617">
+          <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="25" />
+          <folding>
+            <element signature="docComment;class#Icons#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/SortSelectionFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-601">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2170#2171#0" expanded="true" />
+            <element signature="e#2214#2215#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/download/Download.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="261" column="43" selection-start-line="261" selection-start-column="43" selection-end-line="261" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1943#1944#0" expanded="true" />
+            <element signature="e#1979#1980#0" expanded="true" />
+            <element signature="e#2011#2012#0" expanded="true" />
+            <element signature="e#2077#2078#0" expanded="true" />
+            <element signature="e#2225#2226#0" expanded="true" />
+            <element signature="e#2258#2259#0" expanded="true" />
+            <element signature="e#2404#2405#0" expanded="true" />
+            <element signature="e#2436#2437#0" expanded="true" />
+            <element signature="e#2474#2475#0" expanded="true" />
+            <element signature="e#2509#2510#0" expanded="true" />
+            <element signature="e#2549#2550#0" expanded="true" />
+            <element signature="e#2586#2587#0" expanded="true" />
+            <element signature="e#2638#2639#0" expanded="true" />
+            <element signature="e#2680#2681#0" expanded="true" />
+            <element signature="e#2716#2717#0" expanded="true" />
+            <element signature="e#2747#2748#0" expanded="true" />
+            <element signature="e#2784#2785#0" expanded="true" />
+            <element signature="e#2817#2818#0" expanded="true" />
+            <element signature="e#3230#3231#0" expanded="true" />
+            <element signature="e#3270#3271#0" expanded="true" />
+            <element signature="e#3319#3320#0" expanded="true" />
+            <element signature="e#3356#3357#0" expanded="true" />
+            <element signature="e#3408#3409#0" expanded="true" />
+            <element signature="e#3452#3453#0" expanded="true" />
+            <element signature="e#3479#3480#0" expanded="true" />
+            <element signature="e#3525#3526#0" expanded="true" />
+            <element signature="e#3565#3566#0" expanded="true" />
+            <element signature="e#3597#3598#0" expanded="true" />
+            <element signature="e#3628#3629#0" expanded="true" />
+            <element signature="e#3655#3656#0" expanded="true" />
+            <element signature="e#3686#3687#0" expanded="true" />
+            <element signature="e#3713#3714#0" expanded="true" />
+            <element signature="e#3742#3743#0" expanded="true" />
+            <element signature="e#3769#3770#0" expanded="true" />
+            <element signature="e#3807#3808#0" expanded="true" />
+            <element signature="e#3838#3839#0" expanded="true" />
+            <element signature="e#3893#3894#0" expanded="true" />
+            <element signature="e#3936#3937#0" expanded="true" />
+            <element signature="e#3983#3984#0" expanded="true" />
+            <element signature="e#4018#4019#0" expanded="true" />
+            <element signature="e#4067#4068#0" expanded="true" />
+            <element signature="e#4104#4105#0" expanded="true" />
+            <element signature="e#4139#4140#0" expanded="true" />
+            <element signature="e#4170#4171#0" expanded="true" />
+            <element signature="e#4296#4297#0" expanded="true" />
+            <element signature="e#4336#4337#0" expanded="true" />
+            <element signature="e#4481#4482#0" expanded="true" />
+            <element signature="e#4519#4520#0" expanded="true" />
+            <element signature="e#4710#4711#0" expanded="true" />
+            <element signature="e#4757#4758#0" expanded="true" />
+            <element signature="e#9322#9323#0" expanded="true" />
+            <element signature="e#9353#9354#0" expanded="true" />
+            <element signature="e#9481#9482#0" expanded="true" />
+            <element signature="e#9513#9514#0" expanded="true" />
+            <element signature="e#9581#9582#0" expanded="true" />
+            <element signature="e#9640#9641#0" expanded="true" />
+            <element signature="e#10051#10052#0" expanded="true" />
+            <element signature="e#10082#10083#0" expanded="true" />
+            <element signature="e#10149#10150#0" expanded="true" />
+            <element signature="e#10189#10190#0" expanded="true" />
+            <element signature="e#10845#10846#0" expanded="true" />
+            <element signature="e#10877#10878#0" expanded="true" />
+            <element signature="e#11962#11963#0" expanded="true" />
+            <element signature="e#12054#12055#0" expanded="true" />
+            <element signature="e#12094#12095#0" expanded="true" />
+            <element signature="e#12126#12127#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Panels/SettingsFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.jdm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/list.jdm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Collection/DownloadQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Collection/DownloadCollection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-555">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="method#DownloadCollection#0;class#DownloadCollection#0" />
+            <element signature="method#addProccessingDownload#0;class#DownloadCollection#0" />
+            <element signature="method#addCompletedDownload#0;class#DownloadCollection#0" />
+            <element signature="method#removeProcessingDownload#0;class#DownloadCollection#0" />
+            <element signature="method#removeCompletedDownload#0;class#DownloadCollection#0" />
+            <element signature="method#setMaximumSizeOfProcessingDl#0;class#DownloadCollection#0" />
+            <element signature="method#addQueue#0;class#DownloadCollection#0" />
+            <element signature="method#removeQueue#1;class#DownloadCollection#0" />
+            <element signature="method#getQueueByName#0;class#DownloadCollection#0" />
+            <element signature="method#hasDuplicateSelectedQueues#0;class#DownloadCollection#0" />
+            <element signature="method#printAllQueuesAndTheirDownload#0;class#DownloadCollection#0" />
+            <element signature="method#findSpecialDownloadQueue#0;class#DownloadCollection#0" />
+            <element signature="method#addRemovedDownload#0;class#DownloadCollection#0" />
+            <element signature="method#sortArrayList#0;class#DownloadCollection#0" />
+            <element signature="method#swapDownloadPanel#0;class#DownloadCollection#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/MainGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="809" selection-start-line="809" selection-end-line="809" />
+          <folding>
+            <element signature="docComment;class#MainGui#0" />
+            <element signature="e#2007#22382#0" />
+            <element signature="class#5098:5308" />
+            <element signature="class#5538:5748" />
+            <element signature="class#5858:6068" />
+            <element signature="class#6237:6447" />
+            <element signature="e#10152#10459#0" />
+            <element signature="class#10896:11180" />
+            <element signature="method#actionPerformed#0;class#10896:11180" />
+            <element signature="class#11281:11498" />
+            <element signature="class#11599:11828" />
+            <element signature="class#15138:15762" />
+            <element signature="method#actionPerformed#0;class#15138:15762" />
+            <element signature="class#15928:16552" />
+            <element signature="method#actionPerformed#0;class#15928:16552" />
+            <element signature="class#16714:18475" />
+            <element signature="method#actionPerformed#0;class#16714:18475" />
+            <element signature="class#17084:18425" />
+            <element signature="method#actionPerformed#0;class#17084:18425" />
+            <element signature="class#18707:19726" />
+            <element signature="method#actionPerformed#0;class#18707:19726" />
+            <element signature="class#19887:20119" />
+            <element signature="class#21067:21435" />
+            <element signature="method#actionPerformed#0;class#21067:21435" />
+            <element signature="class#21529:21741" />
+            <element signature="method#actionPerformed#0;class#21529:21741" />
+            <element signature="e#22388#22559#0" />
+            <element signature="e#22388#23055#0" />
+            <element signature="e#23061#23243#0" />
+            <element signature="e#23061#28961#0" />
+            <element signature="class#23432:28710" />
+            <element signature="method#actionPerformed#0;class#23432:28710" />
+            <element signature="class#28780:28953" />
+            <element signature="e#28967#29043#0" />
+            <element signature="e#28967#29239#0" />
+            <element signature="e#29245#29367#0" />
+            <element signature="e#29245#31222#0" />
+            <element signature="class#29569:30197" />
+            <element signature="method#actionPerformed#0;class#29569:30197" />
+            <element signature="class#30252:30924" />
+            <element signature="method#actionPerformed#0;class#30252:30924" />
+            <element signature="class#30984:31149" />
+            <element signature="e#31228#31295#0" />
+            <element signature="e#31228#32839#0" />
+            <element signature="class#31895:32107" />
+            <element signature="method#actionPerformed#0;class#31895:32107" />
+            <element signature="class#32152:32364" />
+            <element signature="method#actionPerformed#0;class#32152:32364" />
+            <element signature="class#32407:32564" />
+            <element signature="e#32845#32895#0" />
+            <element signature="e#32845#33215#0" />
+            <element signature="e#33572#33652#0" />
+            <element signature="e#34961#35110#0" />
+            <element signature="e#34961#38887#0" />
+            <element signature="e#38893#39428#0" />
+            <element signature="e#39434#39505#0" />
+            <element signature="e#39434#40480#0" />
+            <element signature="e#39562#40474#0" />
+            <element signature="e#40486#41109#0" />
+            <element signature="e#41280#48695#0" />
+            <element signature="e#48701#49805#0" />
+            <element signature="e#49811#51424#0" />
+            <element signature="e#51430#52592#0" />
+            <element signature="e#52598#53165#0" />
+            <element signature="e#53171#53235#0" />
+            <element signature="e#53241#58812#0" />
+            <element signature="e#54286#54329#0" />
+            <element signature="e#54973#55032#0" />
+            <element signature="e#58818#59593#0" />
+            <element signature="e#59599#59637#0" />
+            <element signature="e#59643#59799#0" />
+            <element signature="e#59805#61279#0" />
+            <element signature="e#61285#61584#0" />
+            <element signature="e#61590#61991#0" />
+            <element signature="e#61997#62299#0" />
+            <element signature="e#61509#62470#0" />
+            <element signature="e#61570#62464#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArquillianSettingsConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8.0.2_162</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
