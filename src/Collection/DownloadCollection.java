@@ -1,6 +1,7 @@
 package Collection;
 
-import Download.Download;
+import download.Download;
+import gui.Panels.DownloadPanel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -168,5 +169,100 @@ public class DownloadCollection {
 
     public ArrayList<Download> getRemovedDownloads() {
         return removedDownloads;
+    }
+
+    public static void sortArrayList(ArrayList<DownloadPanel> arrayListToSort, int orderType, int sortType) {
+        if (orderType == 0) {
+            switch (sortType) {
+                //DESCENDING SORT BY NAME
+                case 1:
+                    for (int i = 0; i < arrayListToSort.size() - 1; i++) {
+                        for (int j = 0; j < arrayListToSort.size() - 1; j++) {
+                            if (arrayListToSort.get(i).getDownload().getFileName().compareTo(arrayListToSort.get(j + 1).getDownload().getFileName()) <= 0 && i < (j + 1)) //NOTE: additional condition for indices
+                            {
+                                DownloadPanel tmpDownloadPanel = arrayListToSort.get(j + 1);
+                                arrayListToSort.set(j + 1, arrayListToSort.get(i));
+                                arrayListToSort.set(i, tmpDownloadPanel);
+                            }
+                        }
+                    }
+                    break;
+                //DESCENDING SORT BY SIZE
+                case 2:
+                    for (int i = 0; i < arrayListToSort.size() - 1; i++) {
+                        for (int j = 0; j < arrayListToSort.size() - 1; j++) {
+                            if (arrayListToSort.get(i).getDownload().getFullFileSize() < arrayListToSort.get(j + 1).getDownload().getFullFileSize() && i < (j + 1)) //NOTE: additional condition for indices
+                            {
+                                DownloadPanel tmpDownloadPanel = arrayListToSort.get(j + 1);
+                                arrayListToSort.set(j + 1, arrayListToSort.get(i));
+                                arrayListToSort.set(i, tmpDownloadPanel);
+                            }
+                        }
+                    }
+                    break;
+                //DESCENDING SORT BY TIME
+                case 3:
+                    for (int i = 0; i < arrayListToSort.size() - 1; i++) {
+                        for (int j = 0; j < arrayListToSort.size() - 1; j++) {
+                            if (arrayListToSort.get(i).getDownload().getTime().compareTo(arrayListToSort.get(j + 1).getDownload().getTime()) <= 0 && i < (j + 1)) //NOTE: additional condition for indices
+                            {
+                                DownloadPanel tmpDownloadPanel = arrayListToSort.get(j + 1);
+                                arrayListToSort.set(j + 1, arrayListToSort.get(i));
+                                arrayListToSort.set(i, tmpDownloadPanel);
+                            }
+                        }
+                    }
+                    break;
+            }
+        } else {
+            switch (sortType) {
+                //ASCENDING SORT BY NAME
+                case 1:
+                    for (int i = 0; i < arrayListToSort.size() - 1; i++) {
+                        for (int j = 0; j < arrayListToSort.size() - 1; j++) {
+                            if (arrayListToSort.get(i).getDownload().getFileName().compareTo(arrayListToSort.get(j + 1).getDownload().getFileName()) >= 0 && i < (j + 1)) //NOTE: additional condition for indices
+                            {
+                                DownloadPanel tmpDownloadPanel = arrayListToSort.get(j + 1);
+                                arrayListToSort.set(j + 1, arrayListToSort.get(i));
+                                arrayListToSort.set(i, tmpDownloadPanel);
+                            }
+                        }
+                    }
+                    break;
+                //ASCENDING SORT BY SIZE
+                case 2:
+                    for (int i = 0; i < arrayListToSort.size() - 1; i++) {
+                        for (int j = 0; j < arrayListToSort.size() - 1; j++) {
+                            if (arrayListToSort.get(i).getDownload().getFullFileSize() > arrayListToSort.get(j + 1).getDownload().getFullFileSize() && i < (j + 1)) //NOTE: additional condition for indices
+                            {
+                                DownloadPanel tmpDownloadPanel = arrayListToSort.get(j + 1);
+                                arrayListToSort.set(j + 1, arrayListToSort.get(i));
+                                arrayListToSort.set(i, tmpDownloadPanel);
+                            }
+                        }
+                    }
+                    break;
+                //ASCENDING SORT BY TIME
+                case 3:
+                    for (int i = 0; i < arrayListToSort.size() - 1; i++) {
+                        for (int j = 0; j < arrayListToSort.size() - 1; j++) {
+                            if (arrayListToSort.get(i).getDownload().getTime().compareTo(arrayListToSort.get(j + 1).getDownload().getTime()) >= 0 && i < (j + 1)) //NOTE: additional condition for indices
+                            {
+                                DownloadPanel tmpDownloadPanel = arrayListToSort.get(j + 1);
+                                arrayListToSort.set(j + 1, arrayListToSort.get(i));
+                                arrayListToSort.set(i, tmpDownloadPanel);
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void swapDownloadPanel(DownloadPanel source, DownloadPanel target) {
+        DownloadPanel tmp = new DownloadPanel();
+        tmp = source;
+        source = target;
+        target = tmp;
     }
 }

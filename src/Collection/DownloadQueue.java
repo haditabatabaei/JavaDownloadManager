@@ -1,6 +1,6 @@
 package Collection;
 
-import Download.Download;
+import download.Download;
 import gui.MainGui;
 import gui.Panels.QueueSettings;
 
