@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 
 /**
  * This class represents a Download panel as a list panel
@@ -22,19 +23,19 @@ public class DownloadPanel extends JPanel {
     private JLabel dateAndTime;
     private JLabel fileIcon;
     private JLabel[] dlSmallButtonsAsLabels;
-    private Icons icons;
+
     private JPanel insidePanel;
     private JPanel infoPanel;
+
     private Download download;
 
     private boolean isSelect;
     private Border selectedBorder;
     private Border defaultBorder;
 
-    private PanelSelectionHandlers psh;
+    private transient PanelSelectionHandlers psh;
 
-    public DownloadPanel() {
-        super(new BorderLayout());
+    private void headStart() {
         psh = new PanelSelectionHandlers();
         defaultBorder = BorderFactory.createMatteBorder(0, 0, 5, 0, Colors.LowerDarkBlue2);
         selectedBorder = BorderFactory.createMatteBorder(0, 0, 5, 0, Color.YELLOW);
@@ -42,9 +43,6 @@ public class DownloadPanel extends JPanel {
         downloadName = new JLabel();
         fileSize = new JLabel();
         dateAndTime = new JLabel();
-        icons = new Icons();
-
-
         insidePanel = new JPanel(new GridLayout(4, 1, 5, 0));
         infoPanel = new JPanel(new GridLayout(1, 3, 0, 5));
         insidePanel.add(downloadName);
@@ -61,16 +59,13 @@ public class DownloadPanel extends JPanel {
         dlSmallButtonsAsLabels = new JLabel[3];
 
         infoIcon = new JLabel();
-        infoIcon.setIcon(icons.getInfoIcon());
+        infoIcon.setIcon(Icons.ICON_INFO);
         infoIcon.setBorder(new EmptyBorder(0, 0, 0, 10));
 
 
         fileIcon = new JLabel();
-        fileIcon.setIcon(icons.getFileIcon());
+        fileIcon.setIcon(Icons.ICON_FILE);
         fileIcon.setBorder(new EmptyBorder(0, 10, 0, 10));
-
-        add(fileIcon, BorderLayout.WEST);
-        add(infoIcon, BorderLayout.EAST);
 
         EmptyBorder btnEmpBorder = new EmptyBorder(0, 0, 0, 0);
 
@@ -79,26 +74,26 @@ public class DownloadPanel extends JPanel {
             dlSmallButtonsAsLabels[i].setBorder(btnEmpBorder);
             switch (i) {
                 case 0:
-                    dlSmallButtonsAsLabels[i].setIcon(icons.getLittleCancel());
+                    dlSmallButtonsAsLabels[i].setIcon(Icons.ICON_LITTLE_CANCEL);
                     break;
                 case 1:
-                    dlSmallButtonsAsLabels[i].setIcon(icons.getLittleFolder());
+                    dlSmallButtonsAsLabels[i].setIcon(Icons.ICON_LITTLE_FOLDER);
                     break;
                 case 2:
-                    dlSmallButtonsAsLabels[i].setIcon(icons.getLittlePlay());
+                    dlSmallButtonsAsLabels[i].setIcon(Icons.ICON_LITTLE_PLAY);
                     break;
             }
             buttonsPanel.add(dlSmallButtonsAsLabels[i]);
         }
-        add(insidePanel);
+    }
 
-        dlSmallButtonsAsLabels[1].addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                download.openFolder();
-            }
-        });
+    private void addingStuff() {
+        add(fileIcon, BorderLayout.WEST);
+        add(infoIcon, BorderLayout.EAST);
+        add(insidePanel);
+    }
+
+    private void smallButtonsMouseHandler() {
         dlSmallButtonsAsLabels[0].addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -107,15 +102,33 @@ public class DownloadPanel extends JPanel {
             }
         });
 
+        dlSmallButtonsAsLabels[1].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                download.openFolder();
+            }
+        });
+
         dlSmallButtonsAsLabels[2].addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                download.resume();
+                //download.resume();
             }
         });
+    }
 
+    public DownloadPanel() {
+        super(new BorderLayout());
+        headStart();
+        addingStuff();
+        smallButtonsMouseHandler();
         addMouseListener(psh);
+    }
+
+    public void setMouseListener() {
+        addMouseListener(new PanelSelectionHandlers());
     }
 
     /**
@@ -125,10 +138,43 @@ public class DownloadPanel extends JPanel {
      */
     public void addDownload(Download download) {
         this.download = download;
+        download.createProgressbar();
         downloadName.setText(download.getFileName());
-        fileSize.setText(download.getDownloadedSize() + " / " + download.getFullFileSize() + "MB");
+        fileSize.setText(download.getDownloadedSize() + " / " + download.getFullFileSize() + "Byte");
         dateAndTime.setText(download.getDate() + " " + download.getTime());
         insidePanel.add(download.getDownloadProgressBar());
+    }
+
+    public void update() {
+        double downloadedKB = download.getDownloadedSize() / 1024;
+        double downloadedMB = downloadedKB / 1024;
+        double downloadedGB = downloadedMB / 1024;
+        double fullKB = download.getFullFileSize() / 1024;
+        double fullMB = fullKB / 1024;
+        double fullGB = fullMB / 1024;
+        int percent = download.getPercent();
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        String downloaded = "";
+        if (downloadedGB >= 1)
+            downloaded = df.format(downloadedGB) + " GB ";
+        else if (downloadedMB < 1024 && downloadedMB >= 1)
+            downloaded = df.format(downloadedMB) + " MB ";
+        else
+            downloaded = df.format(downloadedKB) + " KB ";
+
+        String full = "";
+        if (fullGB >= 1)
+            full = df.format(fullGB) + " GB ";
+        else if (fullMB < 1024 && fullMB >= 1)
+            full = df.format(fullMB) + " MB ";
+        else
+            full = df.format(fullKB) + " KB ";
+
+        fileSize.setText(downloaded + "/ " + full);
+
+        download.getDownloadProgressBar().setValue(percent);
+        validate();
     }
 
     /**
@@ -159,7 +205,6 @@ public class DownloadPanel extends JPanel {
             download.select();
             setBackground(Color.YELLOW);
             setBorder(selectedBorder);
-
         } else {
             setBackground(Colors.defaultGray);
             setBorder(defaultBorder);
@@ -194,15 +239,10 @@ public class DownloadPanel extends JPanel {
         return getDownload().toString();
     }
 
-    public void updateSize() {
-        float downloadedInMB = download.getDownloadedSize() / (1024 * 1024);
-        float fullInMb = download.getFullFileSize() / (1024 * 1024);
-        fileSize.setText(downloadedInMB + " / " + fullInMb + " MB");
-        revalidate();
-    }
-
     public JLabel getFileSize() {
         return fileSize;
     }
+
+
 }
 

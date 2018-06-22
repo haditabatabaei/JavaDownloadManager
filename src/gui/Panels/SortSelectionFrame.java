@@ -1,5 +1,8 @@
 package gui.Panels;
 
+import ActionHandlers.CentralCommand;
+import gui.MainGui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,8 +12,8 @@ public class SortSelectionFrame {
     private static JFrame frame;
     public static JComboBox<String> comboBox;
     private JLabel sortOptionLabel;
-    private JRadioButton ascendingOrder;
-    private JRadioButton descendingOrder;
+    public static JRadioButton ascendingOrder;
+    public static JRadioButton descendingOrder;
     private JButton sortButton;
     private JButton cancelButton;
 
@@ -61,6 +64,9 @@ public class SortSelectionFrame {
 
         frame.add(northPanel, BorderLayout.NORTH);
 
+
+        sortButton.setActionCommand(CentralCommand.COMMAND_START_SORT);
+        sortButton.addActionListener(MainGui.centralCommand);
         ascendingOrder.setSelected(true);
         cancelButton.addActionListener(new ActionListener() {
             @Override

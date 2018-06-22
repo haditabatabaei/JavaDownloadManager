@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 
 public class FilterSiteButtonHandler implements ActionListener {
-    private Icons icons = new Icons();
+    //private Icons icons = new Icons();
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();

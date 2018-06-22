@@ -25,17 +25,17 @@ public class DownloadInfoFrame extends JFrame {
         setLocation(100, 100);
         setMinimumSize(new Dimension(480, 500));
         setLayout(new BorderLayout());
-        icons = new Icons();
+      //  icons = new Icons();
         JPanel infoPanel = new JPanel(new GridLayout(7, 1, 0, 5));
 
         /* File Name Info */
         JLabel fileInfo = new JLabel();
         fileInfo.setText("File Name : " + download.getFileName());
-        fileInfo.setIcon(icons.getFileIcon());
+        fileInfo.setIcon(Icons.ICON_FILE);
 
         /*File Address Info */
         JLabel fileAddress = new JLabel("Download URL : ");
-        fileAddress.setIcon(icons.getLinkIcon());
+        fileAddress.setIcon(Icons.ICON_LINK);
         JPanel pnl2 = new JPanel(new BorderLayout());
         JTextField fileAddressField = new JTextField();
         fileAddressField.setText(download.getUrlAddress());
@@ -48,14 +48,14 @@ public class DownloadInfoFrame extends JFrame {
         /*File Time and Date Started*/
         JLabel fileDateAndTime = new JLabel();
         fileDateAndTime.setText("Date & Time : " + download.getDate() + " | " + download.getTime());
-        fileDateAndTime.setIcon(icons.getDateIcon());
+        fileDateAndTime.setIcon(Icons.ICON_DATE);
 
         /*File Save Directory*/
         JPanel pnl1 = new JPanel(new BorderLayout());
         JTextField fileSavedirectoryField = new JTextField();
         JLabel fileSavedirectory = new JLabel("Save to : ");
         fileSavedirectory.setText("Save to : ");
-        fileSavedirectory.setIcon(icons.getFolderIcon());
+        fileSavedirectory.setIcon(Icons.ICON_FOLDER);
         fileSavedirectoryField.setText(download.getSavePath());
         fileSavedirectoryField.setEditable(false);
         fileSavedirectoryField.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -66,7 +66,7 @@ public class DownloadInfoFrame extends JFrame {
         /*File Size*/
         JLabel fileSize = new JLabel();
         fileSize.setText("Downloaded : " + download.getDownloadedSize() + " / " + download.getFullFileSize() + " MB | " + download.getDownloadProgressBar().getValue() + "% Downloaded. | Transfer Rate : " + (100 + randomGen.nextInt(100)) + " KB/s");
-        fileSize.setIcon(icons.getMicroSdIcon());
+        fileSize.setIcon(Icons.ICON_MICRO_CD);
 
         /*Launch After*/
         JLabel launchAfter = new JLabel();
@@ -74,7 +74,7 @@ public class DownloadInfoFrame extends JFrame {
             launchAfter.setText("File will launch after Download finished.");
         else
             launchAfter.setText("File wont launch after Download finished. ");
-        launchAfter.setIcon(icons.getRunIcon());
+        launchAfter.setIcon(Icons.ICON_RUN);
 
         /*Download Queue Info*/
         JLabel insideQueue = new JLabel();
@@ -82,7 +82,7 @@ public class DownloadInfoFrame extends JFrame {
             insideQueue.setText("is in queue : " + "YES | Queue Name : " + download.getQueueName());
         else
             insideQueue.setText("is in queue : " + "NO");
-        insideQueue.setIcon(icons.getQueueColor());
+        insideQueue.setIcon(Icons.ICON_QUEUE_COLOR);
 
 
         infoSmallPanels = new JPanel[7];

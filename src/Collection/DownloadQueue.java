@@ -1,71 +1,81 @@
 package Collection;
 
-import download.Download;
-import gui.MainGui;
+import gui.Panels.DownloadPanel;
 import gui.Panels.QueueSettings;
 
+import javax.swing.text.html.HTMLDocument;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * This class represents a simple Download queue
  */
-public class DownloadQueue {
-    private ArrayList<Download> items;
+public class DownloadQueue implements Serializable {
+    private ArrayList<DownloadPanel> items;
     private String name;
     private String startTime;
     private String startDate;
-    private QueueSettings queueSettings;
+    private transient QueueSettings queueSettings;
     private boolean isSelected;
+    private boolean isShown;
 
     public DownloadQueue(String name) {
         items = new ArrayList<>();
         this.name = name;
         startTime = LocalTime.now().toString();
         startDate = LocalDate.now().toString();
-        queueSettings = new QueueSettings();
         isSelected = false;
+        queueSettings = new QueueSettings();
+        queueSettings.fillSettingsWithMyStats(this);
     }
 
-    public void showMySettings() {
-        queueSettings.fillFrameWithThisQueue(this);
-        queueSettings.makeVisible();
+    public void createQueueSettings() {
+        queueSettings = new QueueSettings();
+        queueSettings.fillSettingsWithMyStats(this);
     }
 
-    public DownloadQueue() {
-        items = new ArrayList<>();
-        name = "UnNamed.";
-    }
-
-    public boolean isEmpty() {
-        return items.isEmpty();
-    }
-
-    public boolean add(Download download) {
-        if (!(items.contains(download))) {
-            items.add(download);
-            MainGui.downloadCollection.getQueueDownloads().add(download);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean remove(Download download) {
-        if (items.contains(download)) {
-            items.remove(download);
-            MainGui.downloadCollection.getQueueDownloads().remove(download);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean equals(DownloadQueue queue) {
-        return this.name.equals(queue.getName());
+    public ArrayList<DownloadPanel> getItems() {
+        return items;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void addDownloadPanel(DownloadPanel downloadPanel) {
+        items.add(downloadPanel);
+    }
+
+    public void removeDownloadPanel(DownloadPanel downloadPanel) {
+        Iterator it = items.iterator();
+        while (it.hasNext())
+            if (it.next() == downloadPanel)
+                it.remove();
+    }
+
+    public void select() {
+        if (!isSelected)
+            isSelected = true;
+    }
+
+    public void deselect() {
+        if (isSelected)
+            isSelected = false;
+    }
+
+    public void showMySettings() {
+        queueSettings.makeVisible();
+    }
+
+    public void hideMySettings() {
+        queueSettings.makeHidden();
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public void setName(String name) {
@@ -76,14 +86,6 @@ public class DownloadQueue {
         this.startDate = startDate;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public QueueSettings getQueueSettings() {
-        return queueSettings;
-    }
-
     public String getStartDate() {
         return startDate;
     }
@@ -92,23 +94,21 @@ public class DownloadQueue {
         return startTime;
     }
 
-    public void select() {
-        if (!isSelected() && !MainGui.downloadCollection.hasDuplicateSelectedQueues()) {
-            isSelected = true;
-        }
+    public QueueSettings getQueueSettings() {
+        return queueSettings;
     }
 
-    public void deselect() {
-        if (isSelected()) {
-            isSelected = false;
-        }
+    public void show() {
+        if (!isShown)
+            isShown = true;
     }
 
-    public boolean isSelected() {
-        return isSelected;
+    public void hide() {
+        if (isShown)
+            isShown = false;
     }
 
-    public ArrayList<Download> getItems() {
-        return items;
+    public boolean isShown() {
+        return isShown;
     }
 }

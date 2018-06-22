@@ -1,15 +1,16 @@
 package gui.Panels;
 
-import ActionHandlers.QueueOperationHandlers;
+import ActionHandlers.CentralCommand;
+import Collection.DownloadCollection;
 import Collection.DownloadQueue;
+import gui.MainGui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.ArrayList;
 
-public class QueuePanel extends JFrame {
-    public static JFrame frame = new JFrame("Queue Settings");
+public class QueuePanel {
+    public static JFrame frame = new JFrame("Queue Settings/Manager");
     public static JComboBox<String> comboBox = new JComboBox<>();
     private JButton[] queueOperationButtons;
     private JPanel buttonsPanel;
@@ -27,24 +28,27 @@ public class QueuePanel extends JFrame {
         queueOperationButtons = new JButton[4];
         largerButtonsPanel = new JPanel(new BorderLayout());
 
-        QueueOperationHandlers qoh = new QueueOperationHandlers();
         for (int i = 0; i < 4; i++) {
             queueOperationButtons[i] = new JButton();
             switch (i) {
                 case 0:
                     queueOperationButtons[i].setText("Add");
+                    queueOperationButtons[i].setActionCommand(CentralCommand.COMMAND_ADD_NEW_QUEUE);
                     break;
                 case 1:
                     queueOperationButtons[i].setText("Select");
+                    queueOperationButtons[i].setActionCommand(CentralCommand.COMMAND_SELECT_QUEUE);
                     break;
                 case 2:
                     queueOperationButtons[i].setText("Remove");
+                    queueOperationButtons[i].setActionCommand(CentralCommand.COMMAND_REMOVE_SELECTED_QUEUE);
                     break;
                 case 3:
                     queueOperationButtons[i].setText("Settings");
+                    queueOperationButtons[i].setActionCommand(CentralCommand.COMMAND_SHOW_QUEUE_SETTINGS_FRAME);
                     break;
             }
-            queueOperationButtons[i].addActionListener(qoh);
+            queueOperationButtons[i].addActionListener(MainGui.centralCommand);
             buttonsPanel.add(queueOperationButtons[i]);
         }
         comboBox.setEditable(false);
@@ -53,13 +57,15 @@ public class QueuePanel extends JFrame {
 
         frame.add(comboBox, BorderLayout.NORTH);
         frame.add(largerButtonsPanel, BorderLayout.CENTER);
+
+        updateQueueList();
     }
 
-    public static void updateQueueList(ArrayList<DownloadQueue> downloadQueueList) {
+    public static void updateQueueList() {
         if (!(comboBox == null)) {
             comboBox.removeAllItems();
 
-            for (DownloadQueue downloadQueue : downloadQueueList) {
+            for (DownloadQueue downloadQueue : DownloadCollection.queues) {
                 comboBox.addItem(downloadQueue.getName());
             }
             frame.revalidate();
@@ -70,11 +76,8 @@ public class QueuePanel extends JFrame {
         frame.setVisible(true);
     }
 
-    public JButton[] getQueueOperationButtons() {
-        return queueOperationButtons;
-    }
 
-    public static boolean checkRepetiveInCombobox(String queueName) {
+    public static boolean hasRepetiveInCombobox(String queueName) {
         for (int i = 0; i < comboBox.getItemCount(); i++) {
             String toCompare = comboBox.getItemAt(i);
             if (toCompare.equals(queueName))

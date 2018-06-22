@@ -1,5 +1,6 @@
 package gui.Panels;
 
+import ActionHandlers.CentralCommand;
 import ActionHandlers.NewFrameButtonHoverHandler;
 import Collection.DownloadCollection;
 import gui.Colors;
@@ -46,13 +47,12 @@ public class NewDownloadFrame extends JFrame {
 
     private JTextField addressTextField;
     private JTextField nameTextField;
-    private Icons icons;
     private JButton addDownload;
     private JButton cancelDownload;
 
     private JFileChooser fileChooser;
 
-    private static QueuePanel queuePanel;
+    public static QueuePanel queuePanel;
 
     private DownloadCollection collection;
 
@@ -65,7 +65,6 @@ public class NewDownloadFrame extends JFrame {
         setResizable(false);
         this.collection = MainGui.downloadCollection;
         queuePanel = new QueuePanel();
-        icons = new Icons();
 
         savePath = new JTextField("Save Path Here.");
         saveDirPanel = new JPanel(new BorderLayout());
@@ -77,17 +76,23 @@ public class NewDownloadFrame extends JFrame {
         nameTextField = new JTextField();
 
         folderIcon = new JLabel();
-        folderIcon.setIcon(icons.getFolderIcon());
+        folderIcon.setIcon(Icons.ICON_FOLDER);
 
         insideDirPanel.add(folderIcon, BorderLayout.EAST);
         insideDirPanel.add(savePath, BorderLayout.CENTER);
 
         fullSizeTooltip = new JLabel("Size : ");
-        fullSizeTooltip.setIcon(icons.getMicroSdIcon());
+        fullSizeTooltip.setIcon(Icons.ICON_MICRO_CD);
         final ButtonGroup btnGp = new ButtonGroup();
         automatic = new JRadioButton("Automatically", true);
         manual = new JRadioButton("Manually");
         queue = new JRadioButton("Queues");
+
+        automatic.setActionCommand(CentralCommand.COMMAND_AUTOMATIC_DOWNLOAD_STATUS);
+        manual.setActionCommand(CentralCommand.COMMAND_MANUAL_DOWNLOAD_STATUS);
+        queue.setActionCommand(CentralCommand.COMMAND_QUEUE_DOWNLOAD_STATUS);
+
+
         launchCheckBox = new JCheckBox("Launch Download when it is Completed.");
 
         automatic.setFocusPainted(false);
@@ -116,10 +121,10 @@ public class NewDownloadFrame extends JFrame {
         optionsPanel.add(insideOptionsPanel, BorderLayout.NORTH);
 
         addressIcon = new JLabel("URL : ");
-        addressIcon.setIcon(icons.getLinkIcon());
+        addressIcon.setIcon(Icons.ICON_LINK);
 
         fileIcon = new JLabel("Name : ");
-        fileIcon.setIcon(icons.getDocumentFileIcon());
+        fileIcon.setIcon(Icons.ICON_DOCUMENT_FILE);
 
         textFieldPanel = new JPanel(new GridLayout(3, 1, 0, 5));
         iconsPanel = new JPanel(new GridLayout(3, 1, 0, 5));
@@ -159,6 +164,12 @@ public class NewDownloadFrame extends JFrame {
 
         btns.add(cancelDownload);
         btns.add(addDownload);
+
+        addDownload.setActionCommand(CentralCommand.COMMAND_NEW_DOWNLOAD);
+        addDownload.addActionListener(MainGui.centralCommand);
+        cancelDownload.setActionCommand(CentralCommand.COMMAND_CANCEL_NEW_DOWNLOAD_FRAME);
+        cancelDownload.addActionListener(MainGui.centralCommand);
+
         add(larger, BorderLayout.SOUTH);
 
         folderIcon.addMouseListener(new MouseAdapter() {
@@ -176,13 +187,8 @@ public class NewDownloadFrame extends JFrame {
                 }
             }
         });
-        queue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                QueuePanel.updateQueueList(collection.getQueues());
-                queuePanel.makeVisible();
-            }
-        });
+        queue.setActionCommand(CentralCommand.COMMAND_SHOW_QUEUE_MANAGER_FRAME);
+        queue.addActionListener(MainGui.centralCommand);
 
         fileInfoPanel.add(textFieldPanel, BorderLayout.CENTER);
         fileInfoPanel.add(iconsPanel, BorderLayout.WEST);
@@ -282,6 +288,24 @@ public class NewDownloadFrame extends JFrame {
      */
     public JTextField getSavePath() {
         return savePath;
+    }
+
+    public void makeVisible() {
+        if (!isVisible())
+            setVisible(true);
+    }
+
+    public void makeHidden() {
+        setVisible(false);
+    }
+
+    public void reset() {
+        addressTextField.setText("");
+        savePath.setText("");
+        nameTextField.setText("");
+        selectedQueueName.setText("");
+        automatic.setSelected(true);
+        launchCheckBox.setSelected(false);
     }
 
     public void setFullSize(float fullSize) {

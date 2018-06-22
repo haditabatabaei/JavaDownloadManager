@@ -1,14 +1,18 @@
 package gui.Panels;
 
+import ActionHandlers.CentralCommand;
 import ActionHandlers.FilterSiteButtonHandler;
 import ActionHandlers.NewFrameButtonHoverHandler;
 import gui.Colors;
 import gui.Icons;
+import gui.MainGui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -49,7 +53,6 @@ public class SettingsFrame extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        icons = new Icons();
         downloadOptions = new JPanel(new GridLayout(3, 1, 0, 5));
         comboPanel = new JPanel(new BorderLayout());
         insideComboPanel = new JPanel(new GridLayout(3, 1, 5, 5));
@@ -66,7 +69,7 @@ public class SettingsFrame extends JFrame {
         downloadsNumberPanel = new JPanel(new BorderLayout());
         numberOfDownloads = new JTextField("default is 0 ( infinite )");
         JLabel labelNumberOfDownloads = new JLabel("Number of Downloads : ");
-        labelNumberOfDownloads.setIcon(icons.getNewProductIcon());
+        labelNumberOfDownloads.setIcon(Icons.ICON_NEW_PRODUCTION);
         downloadsNumberPanel.add(numberOfDownloads, BorderLayout.CENTER);
         downloadsNumberPanel.add(labelNumberOfDownloads, BorderLayout.WEST);
 
@@ -74,8 +77,8 @@ public class SettingsFrame extends JFrame {
         defSavePath = new JTextField();
         JLabel labelDefSavePath = new JLabel("Default Save Location : ");
         JLabel fileChooserOpener = new JLabel();
-        labelDefSavePath.setIcon(icons.getSaveIcon());
-        fileChooserOpener.setIcon(icons.getFolderIcon());
+        labelDefSavePath.setIcon(Icons.ICON_SAVE);
+        fileChooserOpener.setIcon(Icons.ICON_FOLDER);
 
         defaultSavePanel.add(defSavePath, BorderLayout.CENTER);
         defaultSavePanel.add(labelDefSavePath, BorderLayout.WEST);
@@ -109,10 +112,22 @@ public class SettingsFrame extends JFrame {
         ok.addMouseListener(nfbh);
         cancel.addMouseListener(nfbh);
 
+        apply.setFocusPainted(false);
+        apply.setFocusPainted(false);
+        apply.setFocusPainted(false);
 
-        apply.setFocusPainted(false);
-        apply.setFocusPainted(false);
-        apply.setFocusPainted(false);
+        ok.setActionCommand(CentralCommand.COMMAND_APPLY_SETTINGS);
+        apply.setActionCommand(CentralCommand.COMMAND_APPLY_SETTINGS);
+
+        ok.addActionListener(MainGui.centralCommand);
+        apply.addActionListener(MainGui.centralCommand);
+
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        });
 
         insideSouthPanel.add(apply);
         insideSouthPanel.add(ok);

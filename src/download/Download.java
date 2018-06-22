@@ -1,33 +1,34 @@
 package download;
 
 import gui.MainGui;
+import gui.Panels.DownloadPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * This class represents a Download
  */
-public class Download extends Thread {
+public class Download implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String fileName;
     private String urlAddress;
     private String date;
-    private String time;
-    private File file;
-    private JProgressBar downloadProgressBar;
+    private LocalTime time;
+    private transient File file;
+    private transient JProgressBar downloadProgressBar;
     private boolean isDownloading;
     private boolean isFinished;
-    private float fullFileSize;
-    private float downloadedSize;
+    private double fullFileSize;
+    private double downloadedSize;
     private boolean isInQueue;
     private ImageIcon fileIcon;
     private String savePath;
@@ -37,26 +38,46 @@ public class Download extends Thread {
     private boolean isCancled;
     private String queueName;
     public static final int BUFFER_SIZE = 4096;
-    private int downloadSpeed;
+    private double downloadSpeed;
+    private transient DownloadManager downloadManager;
+    private transient ExecutorService executorService;
+    // public
+
+    public void setFullFileSize(double fullFileSize) {
+        this.fullFileSize = fullFileSize;
+    }
 
     public Download(String urlAddress, String fileName, float fullFileSize) {
         super();
-        time = LocalTime.now().toString();
+        time = LocalTime.now();
         date = LocalDate.now().toString();
         this.urlAddress = urlAddress;
         this.fileName = fileName;
         this.fullFileSize = fullFileSize;
         downloadProgressBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
-        downloadProgressBar.setVisible(true);
-        downloadProgressBar.setStringPainted(true);
         fileIcon = new ImageIcon(getClass().getResource("..//icons//trash_empty.png"));
         if (downloadProgressBar.getValue() == 100) {
             isDownloading = false;
             isFinished = true;
         }
+        downloadProgressBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
+        downloadProgressBar.setVisible(true);
+        downloadProgressBar.setStringPainted(true);
         isPaused = false;
         isCancled = false;
         downloadedSize = 0;
+        executorService = Executors.newSingleThreadExecutor();
+    }
+
+
+    public void createProgressbar() {
+        downloadProgressBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
+        downloadProgressBar.setVisible(true);
+        downloadProgressBar.setStringPainted(true);
+    }
+
+    public double getTimeInDouble() {
+        return (double) time.getHour();
     }
 
     /**
@@ -90,11 +111,11 @@ public class Download extends Thread {
         return isInQueue;
     }
 
-    public float getFullFileSize() {
+    public double getFullFileSize() {
         return fullFileSize;
     }
 
-    public float getDownloadedSize() {
+    public double getDownloadedSize() {
         return downloadedSize;
     }
 
@@ -125,7 +146,7 @@ public class Download extends Thread {
         this.fileName = fileName;
     }
 
-    public void setDownloadedSize(float size) {
+    public void setDownloadedSize(double size) {
         downloadedSize = size;
     }
 
@@ -141,7 +162,11 @@ public class Download extends Thread {
         this.date = date;
     }
 
-    public String getTime() {
+    public String getTimeInString() {
+        return time.toString();
+    }
+
+    public LocalTime getTime() {
         return time;
     }
 
@@ -203,84 +228,22 @@ public class Download extends Thread {
     /**
      * starts Download
      */
-    public void startDownload() {
-        System.out.println(toString() + " Started");
+    public void startDownload(DownloadPanel downloadPanel) {
+        downloadManager = new DownloadManager(downloadPanel);
+        executorService.execute(downloadManager);
+    }
 
-        File targetFile;
-        synchronized (this) {
-            File dir = new File(savePath + "\\");
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            targetFile = new File(savePath + "\\" + fileName);
-            if (!targetFile.exists()) {
-                try {
-                    targetFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        HttpURLConnection connection;
-        try {
-            URL url = new URL(urlAddress);
-            if (MainGui.isFilterSite(urlAddress)) {
+    public int getPercent() {
+        int toReturn = (int) ((downloadedSize / fullFileSize) * 100);
+        return toReturn;
+    }
 
-            } else {
-                connection = (HttpURLConnection) url.openConnection();
-                int responseCode = connection.getResponseCode();
-                System.out.println("Response code : " + responseCode);
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    System.out.println("Connection OK.");
-                    String disposition = connection.getHeaderField("Content-Disposition");
-                    String contentType = connection.getContentType();
-                    int contentLength = connection.getContentLength();
-                    float contentInFloat = (float) contentLength;
-                    System.out.println("Content Length:" + contentLength);
-                    System.out.println("Content-Type = " + contentType);
-                    System.out.println("Content-Disposition = " + disposition);
-                    System.out.println("Content-Length = " + contentInFloat);
-                    System.out.println("fileName = " + fileName);
-                    fullFileSize = contentLength / (1024 * 1024);
-                    System.out.println("full file size :" + fullFileSize + "MB");
-                    downloadedSize = 0;
-                    downloadProgressBar.setValue(0);
-                    InputStream inputStream = connection.getInputStream();
-                    String toSave = savePath + "\\" + fileName;
-                    FileOutputStream outputStream = new FileOutputStream(toSave);
-                    int bytesRead = -1;
-                    byte[] buffer = new byte[BUFFER_SIZE];
-                    System.out.println("Getting bytes now.");
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        long start = System.nanoTime();
-                        outputStream.write(buffer, 0, bytesRead);
-                        System.out.println("number of bytes read : " + bytesRead);
-                        downloadedSize += bytesRead;
-                        downloadProgressBar.setValue(showPercent());
-                        System.out.println("Percent : " + (downloadedSize / contentInFloat) * 100);
-                        downloadProgressBar.setValue((int) ((downloadedSize / contentInFloat) * 100));
-                        long end = System.nanoTime();
-                        System.out.println("Start nano time : " + start);
-                        System.out.println("End nano time : " + end);
-                        float speed = (bytesRead / (end - start));
-                        System.out.println("Speed [Bytes]/[nanoTime]: " + speed);
-                    }
-                    outputStream.close();
-                    inputStream.close();
-                    System.out.println("File Downloaded.");
-                    isDownloading = false;
-                    isFinished = true;
-                    MainGui.checkForFinishedDownloads();
-                } else {
-                    System.out.println("File Did not download.");
-                }
-                connection.disconnect();
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public DownloadManager getDownloadManager() {
+        return downloadManager;
+    }
+
+    public ExecutorService getExecutorService() {
+        return executorService;
     }
 
     /**
@@ -302,7 +265,9 @@ public class Download extends Thread {
     public void pause() {
         if (!isPaused) {
             isPaused = true;
-            suspend();
+            isDownloading = false;
+            isFinished = false;
+            System.out.println("Paused.");
         } else {
             System.out.println("is Paused Already.");
         }
@@ -340,7 +305,8 @@ public class Download extends Thread {
         if (isPaused || isCancled) {
             isPaused = false;
             isCancled = false;
-            interrupt();
+            isDownloading = true;
+            System.out.println("Resumed.");
         } else {
             System.out.println("Not paused or cancel");
         }
@@ -433,13 +399,9 @@ public class Download extends Thread {
         return "{\n[FILENAME]:" + fileName + "\n[DOWNLOADURL]:" + urlAddress + "\n}";
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
+    // pub
 
-    @Override
-    public void run() {
-        System.out.println("Run Called.");
-        startDownload();
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }

@@ -1,12 +1,11 @@
 package gui.Panels;
 
+import ActionHandlers.CentralCommand;
 import Collection.DownloadQueue;
 import gui.MainGui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class QueueSettings {
     private JFrame frame;
@@ -70,40 +69,10 @@ public class QueueSettings {
         frame.add(lowerPanel, BorderLayout.CENTER);
         lowerPanel.add(buttonsPanel, BorderLayout.NORTH);
 
-
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean nameCheck = false;
-                boolean dateCheck = false;
-                boolean timeCheck = false;
-
-                String inputQueueName = nameTextField.getText();
-                if (!QueuePanel.checkRepetiveInCombobox(inputQueueName))
-                    nameCheck = true;
-                /*
-                DATE CHECK
-                 */
-
-                /*
-                TIME CHECK;
-                 */
-                if (nameCheck) {
-                    MainGui.downloadCollection.getQueueByName(oldName).setName(inputQueueName);
-                    QueuePanel.comboBox.removeItem(QueuePanel.comboBox.getSelectedItem());
-                    QueuePanel.comboBox.addItem(inputQueueName);
-                    QueuePanel.comboBox.setSelectedItem(inputQueueName);
-                    QueuePanel.comboBox.revalidate();
-                    JOptionPane.showMessageDialog(null, "Name Changed.", "Name Changed.", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        });
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-            }
-        });
+        okButton.setActionCommand(CentralCommand.COMMAND_APPLY_QUEUE_SETTINGS);
+        okButton.addActionListener(MainGui.centralCommand);
+        cancelButton.setActionCommand(CentralCommand.COMMAND_CANCEL_QUEUE_SETTINGS);
+        cancelButton.addActionListener(MainGui.centralCommand);
 
     }
 
@@ -115,7 +84,7 @@ public class QueueSettings {
         frame.setVisible(false);
     }
 
-    public void fillFrameWithThisQueue(DownloadQueue queue) {
+    public void fillSettingsWithMyStats(DownloadQueue queue) {
         nameTextField.setText(queue.getName());
         timeTextField.setText(queue.getStartTime());
         dateTextField.setText(queue.getStartDate());
@@ -127,4 +96,17 @@ public class QueueSettings {
     public JFrame getFrame() {
         return frame;
     }
+
+    public JTextField getDateTextField() {
+        return dateTextField;
+    }
+
+    public JTextField getNameTextField() {
+        return nameTextField;
+    }
+
+    public JTextField getTimeTextField() {
+        return timeTextField;
+    }
 }
+
